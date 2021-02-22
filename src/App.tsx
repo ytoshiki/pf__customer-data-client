@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import CustomerPage from './pages/CustomerPage';
+import { StoreTypes, fetchAllCustomers } from './redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export interface AppProps {
+  customers: any;
+  fetchCustomers: any;
 }
 
-export default App;
+const App: React.FC<AppProps> = ({ customers, fetchCustomers }) => {
+  useEffect(() => {
+    if (!customers.length) {
+      fetchCustomers();
+    }
+  }, [customers, fetchCustomers]);
+
+  return (
+    <div>
+      <CustomerPage />
+    </div>
+  );
+};
+
+const mapStateToProps = (store: StoreTypes) => {
+  return {
+    customers: store.customers.customers
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    fetchCustomers: () => dispatch(fetchAllCustomers())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
