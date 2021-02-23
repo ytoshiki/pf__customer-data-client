@@ -12,5 +12,17 @@ export interface StoreTypes {
       gender: string;
     }[];
     loading: boolean;
+    customCustomers: {
+      id: string;
+      name: string;
+      age: number;
+      purchase: any[];
+      nationality: string;
+      avator: null | string;
+      email: string;
+      dateRegistered: string;
+      gender: string;
+    }[];
+    customKeyword: string;
   };
 }

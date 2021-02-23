@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import './Graph.scss';
 
@@ -7,6 +8,8 @@ export interface PieGraphProps {
 }
 
 const PieGraph: React.FC<PieGraphProps> = ({ data, label }) => {
+  const history = useHistory();
+
   const COLORS = ['#4a47a3', '#ad3e9c', '#ee3f7a', '#ff6b4a', '#ffa600'];
 
   const RADIAN = Math.PI / 180;
@@ -20,6 +23,16 @@ const PieGraph: React.FC<PieGraphProps> = ({ data, label }) => {
         {`${(percent * 100).toFixed(0)}%`}
       </text>
     );
+  };
+
+  const onClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+    e.preventDefault();
+    const node = e.currentTarget;
+    // if (node.getAttribute('name') === 'male' || node.getAttribute('name') === 'female')
+
+    if (node.getAttribute('name')) {
+      history.push(`/category/${label.toLowerCase()}/${node.getAttribute('name')}`);
+    }
   };
 
   return (
@@ -39,7 +52,7 @@ const PieGraph: React.FC<PieGraphProps> = ({ data, label }) => {
           >
             <Pie data={data} dataKey='value' nameKey='name' cx='50%' cy='50%' fill='#828433' label={renderCustomizedLabel} labelLine={false}>
               {data.map((entry: any, index: any) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} onClick={onClick} />
               ))}
             </Pie>
             <Legend />

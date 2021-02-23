@@ -1,19 +1,35 @@
 .customerpage {
   max-width: 100rem;
-  padding: 1rem;
+  padding: 2rem 1rem;
   margin: auto;
 
+  &__top {
+    display: flex;
+    margin-bottom: 3rem;
+    justify-content: space-between;
+  }
+
+  &__membership {
+    flex-basis: 49%;
+    box-shadow: var(--box-shadow);
+  }
+
   h2 {
-    font-size: 3rem;
+    font-size: 2.3rem;
     color: rgba(#fff, 0.9);
+    margin-bottom: 4rem;
   }
 
   &__left {
     display: flex;
-    margin-bottom: 6rem;
+    flex-basis: 49%;
+
+    box-shadow: var(--box-shadow);
+    background: var(--color-gb-dark02);
   }
 
   &__right {
     display: flex;
+    justify-content: space-between;
   }
 }

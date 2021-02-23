@@ -1,9 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   background: var(--color-gb-dark);
   color: var(--color-white);
   font-family: 'Poppins', sans-serif;
+}
+
+.logo {
+  font-family: 'Prata', serif;
+  font-size: 1.5rem;
+}
+
+a,
+a:hover,
+a:focus,
+a:visited {
+  text-decoration: none;
+  color: inherit;
 }
 
 :root {
@@ -12,4 +34,7 @@ body {
   --color-dark-deep: #202529;
   --color-white: #fff;
   --color-gb-dark: #373737;
+  --color-gb-dark01: #2e2e2e;
+  --color-gb-dark02: #474747;
+  --box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }

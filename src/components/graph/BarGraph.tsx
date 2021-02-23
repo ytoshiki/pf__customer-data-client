@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { natSelector, StoreTypes } from '../../redux';
 import './Graph.scss';
@@ -9,7 +10,14 @@ export interface BarGraphProps {
 }
 
 const BarGraph: React.FC<BarGraphProps> = ({ data, label }) => {
-  console.log(data);
+  const history = useHistory();
+
+  const onClick = (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {
+    const event: any = e;
+    if (event.hasOwnProperty('name')) {
+      history.push(`/category/${label.toLowerCase()}/${event.name}`);
+    }
+  };
   return (
     <div className='bar-chart'>
       <p className='bar-chart__label'>{label}</p>
@@ -28,8 +36,8 @@ const BarGraph: React.FC<BarGraphProps> = ({ data, label }) => {
           <XAxis dataKey='name' />
           <YAxis />
           <Tooltip />
-
-          <Bar dataKey='number' fill='#ad3e9c' />
+          <Legend />
+          <Bar dataKey='number' fill='#ad3e9c' onClick={onClick} />
         </BarChart>
       </ResponsiveContainer>
     </div>

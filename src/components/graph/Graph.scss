@@ -4,43 +4,54 @@
   // height: 300px;
   // max-height: 400px;
   min-height: 300px;
-  flex-basis: 25%;
+  flex-basis: 50%;
   position: relative;
   padding-top: 30px;
 
   &__label {
     position: absolute;
-    top: 0;
+    top: 1rem;
     left: 50%;
     transform: translateX(-50%);
+    font-size: 1.3rem;
   }
 }
 
 .ranking-chart {
   position: relative;
   padding-top: 80px;
-  height: 400px;
-  flex: 1;
+  height: 500px;
+  flex-basis: 49%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-shadow: var(--box-shadow);
+  background: var(--color-gb-dark02);
 
   &__label {
     position: absolute;
-    top: 0;
-    left: 50%;
+    top: 1rem;
+    left: 48%;
     transform: translateX(-50%);
+    font-size: 1.3rem;
   }
 }
 
 .bar-chart {
-  flex: 1;
+  flex-basis: 49%;
+  box-shadow: var(--box-shadow);
   // width: 100%;
-  height: 400px;
+  height: 500px;
   position: relative;
   padding-top: 80px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: var(--color-gb-dark02);
 
   &__label {
     position: absolute;
-    top: 0;
+    top: 1rem;
     left: 50%;
     transform: translateX(-50%);
+    font-size: 1.3rem;
   }
 }

@@ -132,3 +132,19 @@ export const purchaseSelector = createSelector(customersSelector, (customers) =>
   // returns
   // [ { name, purchase}, {}]
 });
+
+export const membershipSelector = createSelector(customersSelector, (customers) => {
+  const currYear = new Date().getFullYear();
+  const lastYear = currYear - 1;
+
+  return [
+    {
+      year: lastYear,
+      number: customers.length - 65
+    },
+    {
+      year: currYear,
+      number: customers.length
+    }
+  ];
+});
