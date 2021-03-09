@@ -1,0 +1,4 @@
+export enum ReviewActionNames {
+  START_REVIEWS_ACTION = 'START_REVIEWS_ACTION',
+  FETCH_REVIEWS = 'FETCH_REVIEWS'
+}

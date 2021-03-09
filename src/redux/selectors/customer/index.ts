@@ -3,6 +3,36 @@ import { StoreTypes } from '../../store/storeTypes';
 
 const customersSelector = (state: StoreTypes) => state.customers.customers;
 
+// For newly Added Registered Customers
+
+export const newlyRegisteredSelector = createSelector(customersSelector, (customers) => {
+  const now = new Date().setMonth(new Date().getMonth() - 1);
+
+  const newlyRegistered = customers.filter((customer) => {
+    const date = new Date(customer.dateRegistered);
+    return date > new Date(now);
+  }).length;
+
+  return newlyRegistered;
+});
+
+// Percentage Increase In a year
+
+export const percentageSelector = createSelector(customersSelector, (customers) => {
+  const currYear = new Date().getFullYear();
+  const lastYear = currYear - 1;
+
+  const lastNumber = customers.filter((customer) => {
+    const date = new Date(customer.dateRegistered).getFullYear();
+    return date === lastYear;
+  }).length;
+
+  const currNumber = customers.length;
+
+  const percentageIncrease = ((currNumber - lastNumber) / lastNumber) * 100;
+  return Math.round(percentageIncrease);
+});
+
 export const genderSelector = createSelector(customersSelector, (customers) => {
   let male = 0;
   let female = 0;
@@ -115,36 +145,42 @@ export const natSelector = createSelector(customersSelector, (customers) => {
   ];
 });
 
-export const purchaseSelector = createSelector(customersSelector, (customers) => {
-  const reducer = (a: number, b: number): number => a + b;
+// export const purchaseSelector = createSelector(customersSelector, (customers) => {
+//   const reducer = (a: number, b: number): number => a + b;
 
-  const topTenCustomers = customers
-    .sort((a, b) => b.purchase.reduce(reducer) - a.purchase.reduce(reducer))
-    .slice(0, 10)
-    .map((customer) => {
-      return {
-        name: customer.name,
-        purchase: customer.purchase.reduce(reducer)
-      };
-    });
+//   const topTenCustomers = customers
+//     .sort((a, b) => b.purchase.reduce(reducer) - a.purchase.reduce(reducer))
+//     .slice(0, 10)
+//     .map((customer) => {
+//       return {
+//         name: customer.name,
+//         purchase: customer.purchase.reduce(reducer)
+//       };
+//     });
 
-  return topTenCustomers;
-  // returns
-  // [ { name, purchase}, {}]
-});
+//   return topTenCustomers;
+//   // returns
+//   // [ { name, purchase}, {}]
+// });
 
 export const membershipSelector = createSelector(customersSelector, (customers) => {
   const currYear = new Date().getFullYear();
   const lastYear = currYear - 1;
 
+  const lastNumber = customers.filter((customer) => {
+    const date = new Date(customer.dateRegistered).getFullYear();
+    return date === lastYear;
+  }).length;
+  const currNumber = customers.length;
+
   return [
     {
       year: lastYear,
-      number: customers.length - 65
+      number: lastNumber
     },
     {
       year: currYear,
-      number: customers.length
+      number: currNumber
     }
   ];
 });

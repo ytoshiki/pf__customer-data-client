@@ -1,28 +1,18 @@
 import axios from 'axios';
-import { generateKey, randomPurchase } from '../../helpers';
-import { ActionTypes } from '../types/customer/reducer/actionTypes';
 import { CustomerActionName } from '../types/customer/actionName';
 import { store } from '../store/store';
 import { StoreTypes } from '../store/storeTypes';
 
 interface CustomerData {
   gender: string;
-  name: {
-    first: string;
-    last: string;
-  };
+  username: string;
+  purchasedItems: string[];
   email: string;
-  dob: {
-    age: number;
-  };
-  picture: {
-    large: string;
-    medium: string;
-  };
+  _id: string;
+  age: number;
+  avator: string;
   nat: string;
-  registered: {
-    date: string;
-  };
+  dateRegistered: Date;
 }
 
 export const fetchAllCustomers = () => {
@@ -32,25 +22,25 @@ export const fetchAllCustomers = () => {
     });
 
     try {
-      const response_01 = await axios('https://randomuser.me/api/?results=200&nat=gb,dk,fr,no,nl');
+      const response_01 = await axios(`${process.env.REACT_APP_API_ENDPOINT}/customers`);
       const data_01 = await response_01.data;
 
-      if (data_01.error) {
-        throw new Error('Server Error');
+      if (!data_01.success) {
+        throw new Error(data_01.message || 'Fetch Error');
       }
 
-      const customers_01: CustomerData[] = data_01.results;
+      const customers_01: CustomerData[] = data_01.customers;
 
       const customers_02 = customers_01.map((customer) => {
         return {
-          id: generateKey(customer.name.first),
-          name: customer.name.first + ' ' + customer.name.last,
-          age: Math.floor(Math.random() * 25 + 17),
-          purchase: [randomPurchase()],
+          id: customer._id,
+          name: customer.username,
+          age: customer.age,
+          purchase: customer.purchasedItems,
           nationality: customer.nat,
-          avator: customer.picture.large,
+          avator: customer.avator,
           email: customer.email,
-          dateRegistered: customer.registered.date,
+          dateRegistered: customer.dateRegistered,
           gender: customer.gender
         };
       });

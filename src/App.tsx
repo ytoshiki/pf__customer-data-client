@@ -9,7 +9,6 @@ import Navigation from './components/Navigation';
 import GenderCategoryPage from './pages/GenderCategoryPage';
 import AgeCategoryPage from './pages/AgeCategoryPage';
 import NatCategoryPage from './pages/NatCategoryPage';
-import PieGraph from './components/graph/PieGraph';
 import ProductPage from './pages/ProductPage';
 
 export interface AppProps {

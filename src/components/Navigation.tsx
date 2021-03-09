@@ -1,9 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import './Navigation.scss';
-import UserLogo from '../images/user-icon.png';
-import ItemLogo from '../images/item-icon.png';
-import ProductLogo from '../images/product.png';
-import { ReactComponent as ModeSVG } from '../images/color-adjust.svg';
+
 import { Link } from 'react-router-dom';
 
 export interface NavigationProps {}
@@ -62,25 +59,25 @@ const Navigation: React.FC<NavigationProps> = () => {
           <ul className='navigation__menu'>
             <li className='navigation__menu-item active'>
               <Link to='/' className='navigation__menu-link'>
-                <div>
+                {/* <div>
                   <img src={UserLogo} alt='' />
-                </div>
+                </div> */}
                 <small>Customer</small>
               </Link>
             </li>
             <li className='navigation__menu-item'>
               <Link to='/product' className='navigation__menu-link'>
-                <div>
+                {/* <div>
                   <img src={ProductLogo} alt='' />
-                </div>
+                </div> */}
                 <small>Product</small>
               </Link>
             </li>
             <li className='navigation__menu-item'>
               <Link to='/product' className='navigation__menu-link'>
-                <div>
+                {/* <div>
                   <img src={ItemLogo} alt='' />
-                </div>
+                </div> */}
                 <small>Profit</small>
               </Link>
             </li>
@@ -96,7 +93,6 @@ const Navigation: React.FC<NavigationProps> = () => {
             />
             <span className='slider round'></span>
           </label>
-          <div className='navigation__svg'>{<ModeSVG />}</div>
         </li>
       </ul>
     </nav>

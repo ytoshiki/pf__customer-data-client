@@ -1,14 +1,21 @@
-import { connect } from 'react-redux';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { purchaseSelector, StoreTypes } from '../../redux';
 import './Graph.scss';
 
 export interface RankingGraphProps {
   data: any;
   label: string;
+  x: string;
+  y: string;
+  others: null | string[];
 }
 
-const RankingGraph: React.FC<RankingGraphProps> = ({ data, label }) => {
+const RankingGraph: React.FC<RankingGraphProps> = ({ data, label, x, y, others = null }) => {
+  if (data.length < 1) {
+    return <div>No Data</div>;
+  }
+
+  console.log(x, y, others);
+
   return (
     <div className='ranking-chart'>
       <p className='ranking-chart__label'>{label}</p>
@@ -25,22 +32,16 @@ const RankingGraph: React.FC<RankingGraphProps> = ({ data, label }) => {
           // }}
           barSize={20}
         >
-          <XAxis dataKey='name' scale='point' padding={{ left: 10, right: 10 }} />
+          <XAxis dataKey={x} scale='point' padding={{ left: 10, right: 10 }} />
           <YAxis />
           <Tooltip />
           <Legend />
           <CartesianGrid />
-          <Bar dataKey='purchase' fill='#ff6b4a' background={{ fill: '#eee' }} />
+          <Bar dataKey={y} fill='#ff6b4a' background={{ fill: '#eee' }} />
         </BarChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-const mapStateToProps = (store: StoreTypes) => {
-  return {
-    data: purchaseSelector(store)
-  };
-};
-
-export default connect(mapStateToProps)(RankingGraph);
+export default RankingGraph;
