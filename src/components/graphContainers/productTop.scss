@@ -1,0 +1,38 @@
+.product-top {
+  &__avarage-rating {
+    box-shadow: var(--box-shadow);
+    background: var(--color-gb-dark02);
+    display: flex;
+
+    &-facts {
+      display: flex;
+      width: 50%;
+      padding: 2rem 5rem 2rem 5rem;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .label {
+        display: inline-block;
+        padding-bottom: 1rem;
+      }
+
+      .card {
+        font-size: 1.2rem;
+        width: calc(50% - 25px);
+        text-align: center;
+        margin: 1rem 0;
+
+        &:nth-child(odd) {
+          margin-right: 50px;
+        }
+      }
+    }
+    margin-bottom: 2rem;
+  }
+
+  &__all-rating {
+    box-shadow: var(--box-shadow);
+    background: var(--color-gb-dark02);
+    margin-bottom: 2rem;
+  }
+}

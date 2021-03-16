@@ -1,10 +1,14 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import BarGraph from '../components/graph/BarGraph';
 import MembershipGraph from '../components/graph/MembershipGraph';
 import PieGraph from '../components/graph/PieGraph';
 import RankingGraph from '../components/graph/RankingGraph';
 import Header from '../components/Header';
-import { StoreTypes, genderSelector, ageSelector, newlyRegisteredSelector, percentageSelector } from '../redux';
+import { StoreTypes, genderSelector, ageSelector, newlyRegisteredSelector, percentageSelector, natSelector } from '../redux';
+
 import './CustomerPage.scss';
 
 export interface CustomerPageProps {
@@ -13,17 +17,87 @@ export interface CustomerPageProps {
   ages: any;
   newlyRegistered: number;
   percentage: number;
+  nationalityData: any[];
 }
 
-const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, newlyRegistered, percentage }) => {
+interface RankingData {
+  id: string;
+  username: string;
+  totalPurchases: number;
+}
+
+const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, newlyRegistered, percentage, nationalityData }) => {
+  const [rankingData, setRankingData] = useState<RankingData[]>([]);
+
+  const [satisfaction, setSatisfaction] = useState<number>();
+
+  useEffect(() => {
+    if (rankingData.length > 0) {
+      return;
+    }
+
+    const fetchRankingData = async () => {
+      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/customers/purchased`);
+      const data = await response.data;
+
+      if (!data.success) {
+        console.log(data.message || 'FETCH ERROR');
+        return;
+      }
+
+      setRankingData(data.customers);
+    };
+
+    fetchRankingData();
+  }, [rankingData, setRankingData]);
+
+  useEffect(() => {
+    if (satisfaction) {
+      return;
+    }
+
+    const fetchSatisfaction = async () => {
+      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/reviews/satisfaction`);
+      const data = await response.data;
+
+      if (!data.success) {
+        console.log(data.message || 'FETCH ERROR');
+        return;
+      }
+
+      setSatisfaction(data.satisfaction);
+    };
+
+    if (!satisfaction) {
+      fetchSatisfaction();
+    }
+  }, [satisfaction, setSatisfaction]);
   return (
     <>
       <Header category='customer' />
       <div className='customerpage'>
-        <p>Newly Registered Customers: {newlyRegistered}</p>
-        <p>Total Customers: {customers.length}</p>
-        <p>Percentage Increase In a year: {percentage}%</p>
-        <p>Over All Satisfactions: 4.5/5</p>
+        <div className='customer-cards'>
+          <Link to='/customers/newlyRegistered'>
+            <div className='customer-card'>
+              Newly Registered Customers
+              <span className='data'>{newlyRegistered}+</span>
+            </div>
+          </Link>
+          <Link to='customers/all'>
+            <div className='customer-card'>
+              Total Customers
+              <span className='data'>{customers.length}</span>
+            </div>
+          </Link>
+          <div className='customer-card'>
+            Customer Increase In a year <span className='data'>{percentage}%</span>
+          </div>
+          {satisfaction && (
+            <div className='customer-card'>
+              Over All Satisfactions <span className='data'>{satisfaction}%</span>
+            </div>
+          )}
+        </div>
 
         <div className='customerpage__top'>
           <div className='customerpage__left'>
@@ -37,7 +111,8 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
           </div>
         </div>
         <div className='customerpage__right'>
-          <BarGraph label='Nationality' />
+          <BarGraph label='Nationality' data={nationalityData} x='country' y='number' />
+          {rankingData && <RankingGraph data={rankingData} x='username' y='totalPurchases' label='Top Customers By Purchases' others={null} />}
         </div>
       </div>
     </>
@@ -50,7 +125,8 @@ const mapStateToProps = (store: StoreTypes) => {
     genders: genderSelector(store),
     ages: ageSelector(store),
     newlyRegistered: newlyRegisteredSelector(store),
-    percentage: percentageSelector(store)
+    percentage: percentageSelector(store),
+    nationalityData: natSelector(store)
   };
 };
 

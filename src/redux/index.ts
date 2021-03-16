@@ -5,3 +5,4 @@ export * from './selectors/customer';
 export * from './actions/categoryActions';
 export * from './actions/productActions';
 export * from './selectors/product';
+export * from './selectors/purchase';

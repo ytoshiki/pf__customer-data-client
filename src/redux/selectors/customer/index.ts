@@ -98,51 +98,34 @@ export const ageSelector = createSelector(customersSelector, (customers) => {
 });
 
 export const natSelector = createSelector(customersSelector, (customers) => {
-  let GB = 0;
-  let DK = 0;
-  let FR = 0;
+  let natContainer: string[] = [];
 
-  let NL = 0;
-  let NO = 0;
+  customers.forEach((customer) => {
+    if (!natContainer.includes(customer.nationality)) {
+      natContainer.push(customer.nationality);
+    }
+  });
+
+  const dataArray = natContainer.map((nat) => {
+    return {
+      country: nat,
+      number: 0
+    };
+  });
 
   for (let customer of customers) {
     const nat = customer.nationality;
 
-    if (nat === 'GB') {
-      GB++;
-    } else if (nat === 'DK') {
-      DK++;
-    } else if (nat === 'FR') {
-      FR++;
-    } else if (nat === 'NO') {
-      NO++;
-    } else if (nat === 'NL') {
-      NL++;
-    }
+    dataArray.map((data) => {
+      if (data.country === nat) {
+        data.number += 1;
+      }
+
+      return data;
+    });
   }
 
-  return [
-    {
-      name: 'GB',
-      number: GB
-    },
-    {
-      name: 'FR',
-      number: FR
-    },
-    {
-      name: 'DK',
-      number: DK
-    },
-    {
-      name: 'NO',
-      number: NO
-    },
-    {
-      name: 'NL',
-      number: NL
-    }
-  ];
+  return dataArray.sort((a, b) => b.number - a.number);
 });
 
 // export const purchaseSelector = createSelector(customersSelector, (customers) => {

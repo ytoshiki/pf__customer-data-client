@@ -1,0 +1,52 @@
+.profitpage {
+  max-width: 110rem;
+  padding: 2rem 1rem;
+  margin: auto;
+
+  .profit-cards {
+    display: flex;
+    padding: 1rem 2rem;
+
+    &__card {
+      min-height: 9rem;
+      flex-basis: 50%;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      .space {
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-weight: 300;
+        font-size: 1.1rem;
+      }
+
+      .sub {
+        margin-left: 2rem;
+        max-width: 9rem;
+
+        small {
+          display: inline-block;
+          color: rgba(#fff, 0.8);
+          min-height: 60px;
+
+          .data {
+            color: #fff;
+            font-size: inherit;
+          }
+        }
+      }
+
+      .main {
+      }
+    }
+
+    .data {
+      font-size: 3.3rem;
+    }
+  }
+}

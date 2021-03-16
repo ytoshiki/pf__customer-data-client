@@ -3,13 +3,24 @@ import { connect } from 'react-redux';
 import CustomerPage from './pages/CustomerPage';
 import { StoreTypes, fetchAllCustomers } from './redux';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Header from './components/Header';
 import Loading from './components/Loading';
 import Navigation from './components/Navigation';
 import GenderCategoryPage from './pages/GenderCategoryPage';
 import AgeCategoryPage from './pages/AgeCategoryPage';
 import NatCategoryPage from './pages/NatCategoryPage';
 import ProductPage from './pages/ProductPage';
+import ProfitPage from './pages/ProfitPage';
+import NewlyRegistered from './pages/customer/newlyRegistered';
+import AllCustomers from './pages/customer/AllCustomers';
+import CustomersByGender from './pages/customer/CustomersByGender';
+import CustomersByAge from './pages/customer/CustomersByAge';
+import CustomersByNat from './pages/customer/CustomersByNat';
+import CustomerById from './pages/customer/CustomerById';
+import NewlyAdded from './pages/product/newlyAdded';
+import AllProducts from './pages/product/AllProducts';
+import AllReviews from './pages/review/AllReviews';
+import ProductById from './pages/product/ProductById';
+import PurchasesByTerm from './pages/purchase/PurchasesByTerm';
 
 export interface AppProps {
   customers: any;
@@ -39,8 +50,44 @@ const App: React.FC<AppProps> = ({ customers, fetchCustomers, loading }) => {
         <Route path='/category/nationality/:nat'>
           <NatCategoryPage />
         </Route>
-        <Route path='/product'>
+        <Route path='/customers/newlyRegistered'>
+          <NewlyRegistered />
+        </Route>
+        <Route path='/customers/all'>
+          <AllCustomers />
+        </Route>
+        <Route path='/customers/gender/:gender'>
+          <CustomersByGender />
+        </Route>
+        <Route path='/customers/age/:age'>
+          <CustomersByAge />
+        </Route>
+        <Route path='/customers/nat/:nat'>
+          <CustomersByNat />
+        </Route>
+        <Route path='/customers/:id'>
+          <CustomerById />
+        </Route>
+        <Route exact={true} path='/products'>
           <ProductPage />
+        </Route>
+        <Route path='/products/new'>
+          <NewlyAdded />
+        </Route>
+        <Route path='/products/all'>
+          <AllProducts />
+        </Route>
+        <Route path='/products/:id'>
+          <ProductById />
+        </Route>
+        <Route path='/reviews/all'>
+          <AllReviews />
+        </Route>
+        <Route exact={true} path='/profit'>
+          <ProfitPage />
+        </Route>
+        <Route path='/profit/:term'>
+          <PurchasesByTerm />
         </Route>
         <Route path='/' exact>
           <CustomerPage />

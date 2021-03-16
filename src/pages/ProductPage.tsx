@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import RankingGraph from '../components/graph/RankingGraph';
-import ShapePieGraph from '../components/graph/ShapePieGraph';
+import ProductTop from '../components/graphContainers/ProductTop';
 import Header from '../components/Header';
 import { getAllPurchases } from '../helpers/getPurchases';
 import { StoreTypes, fetchAllCategories, fetchAllProducts, newlyAddedSelector } from '../redux';
@@ -9,6 +10,7 @@ import { fetchAllReviews } from '../redux/actions/reviewActions';
 import { Category } from '../redux/reducers/category/categoryReducer';
 import { Review } from '../redux/reducers/review/reviewReducer';
 import { overallratingSelector } from '../redux/selectors/review';
+import './ProductPage.scss';
 
 export interface Product {
   name: string;
@@ -105,38 +107,47 @@ const ProductPage: React.FC<ProductPageProps> = ({ products, fetchProducts, newl
           }
         });
 
-      console.log(returndata);
       setRankingData(returndata);
     });
   }, [rankingData, setRankingData]);
+
   return (
-    <div>
+    <div className='productpage'>
       <Header category='Product' />
       {products.length && (
-        <div>
-          <div>
-            <h3>Newly Added Products</h3>
-            <span>{newlyAdded}</span>
-          </div>
-          <div>
-            <h3>Total Amount of Products</h3>
-            <span>{products.length}</span>
-          </div>
-          {categories.length && (
-            <div>
-              <h3>Total Amount of Categories</h3>
-              <span>{categories.length}</span>
+        <div className='product-cards'>
+          <Link to='/products/new'>
+            <div className='product-cards__card'>
+              <h3>Newly Added Products</h3>
+              <span className='data'>{newlyAdded}+</span>
             </div>
+          </Link>
+          <Link to='/products/all'>
+            <div className='product-cards__card'>
+              <h3>Total Amount of Products</h3>
+              <span className='data'>{products.length}</span>
+            </div>
+          </Link>
+          {reviews.length && (
+            <Link to='/reviews/all'>
+              <div className='product-cards__card'>
+                <h3>Total Amount of Reviews</h3>
+                <span className='data'>{reviews.length}</span>
+              </div>
+            </Link>
           )}
           {overallRating && (
-            <div>
-              <h3>Over All Rating</h3>
-              <span>{overallRating}/5</span>
-            </div>
+            <Link to='/reviews/all'>
+              <div className='product-cards__card'>
+                <h3>Over All Rating</h3>
+                <span className='data'>{overallRating}/5.0</span>
+              </div>
+            </Link>
           )}
         </div>
       )}
-      <ShapePieGraph label='View By Rating: 1-5' />
+
+      <ProductTop />
       {rankingData.length && (
         <div>
           <RankingGraph label='Most Purchased Products' data={rankingData} x='name' y='sold' others={['price']} />

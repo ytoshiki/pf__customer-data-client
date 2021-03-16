@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './Graph.scss';
 
@@ -10,11 +11,20 @@ export interface RankingGraphProps {
 }
 
 const RankingGraph: React.FC<RankingGraphProps> = ({ data, label, x, y, others = null }) => {
+  const history = useHistory();
   if (data.length < 1) {
     return <div>No Data</div>;
   }
 
-  console.log(x, y, others);
+  const onClick = (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {
+    const event: any = e;
+
+    if (event.hasOwnProperty('id')) {
+      history.push(`/products/${event.id}`);
+    } else if (event.hasOwnProperty(x)) {
+      history.push(`/customers/${event.x}`);
+    }
+  };
 
   return (
     <div className='ranking-chart'>
@@ -32,12 +42,12 @@ const RankingGraph: React.FC<RankingGraphProps> = ({ data, label, x, y, others =
           // }}
           barSize={20}
         >
-          <XAxis dataKey={x} scale='point' padding={{ left: 10, right: 10 }} />
+          <XAxis dataKey={x} scale='point' padding={{ left: 30, right: 30 }} />
           <YAxis />
           <Tooltip />
           <Legend />
           <CartesianGrid />
-          <Bar dataKey={y} fill='#ff6b4a' background={{ fill: '#eee' }} />
+          <Bar dataKey={y} fill='#ff6b4a' background={{ fill: '#eee' }} onClick={onClick} barSize={25} />
         </BarChart>
       </ResponsiveContainer>
     </div>

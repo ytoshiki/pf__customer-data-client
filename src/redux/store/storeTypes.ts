@@ -1,3 +1,4 @@
+import { StateTypes as PurchaseTypes } from '../reducers/purchase/purchaseReducer';
 import { StateTypes as ReviewTypes } from '../reducers/review/reviewReducer';
 
 export interface StoreTypes {
@@ -51,4 +52,5 @@ export interface StoreTypes {
     loading: boolean;
   };
   reviews: ReviewTypes;
+  purchases: PurchaseTypes;
 }

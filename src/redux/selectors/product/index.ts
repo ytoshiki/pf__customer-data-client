@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { productReducer } from '../../reducers/product/productReducer';
 import { StoreTypes } from '../../store/storeTypes';
 
 const productsSelector = (state: StoreTypes) => state.products.products;

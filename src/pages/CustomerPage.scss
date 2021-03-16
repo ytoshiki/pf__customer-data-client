@@ -1,7 +1,26 @@
 .customerpage {
-  max-width: 100rem;
+  max-width: 110rem;
   padding: 2rem 1rem;
   margin: auto;
+
+  .customer-cards {
+    display: flex;
+    justify-content: space-between;
+
+    .customer-card {
+      min-height: 9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgba(#fff, 0.7);
+    }
+
+    .data {
+      font-size: 3.5rem;
+      color: #fff;
+    }
+  }
 
   &__top {
     display: flex;

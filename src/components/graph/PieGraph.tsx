@@ -31,7 +31,7 @@ const PieGraph: React.FC<PieGraphProps> = ({ data, label }) => {
     // if (node.getAttribute('name') === 'male' || node.getAttribute('name') === 'female')
 
     if (node.getAttribute('name')) {
-      history.push(`/category/${label.toLowerCase()}/${node.getAttribute('name')}`);
+      history.push(`/customers/${label.toLowerCase()}/${node.getAttribute('name')}`);
     }
   };
 

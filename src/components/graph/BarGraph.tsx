@@ -1,21 +1,28 @@
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { natSelector, StoreTypes } from '../../redux';
+
 import './Graph.scss';
 
 export interface BarGraphProps {
   data: any;
   label: string;
+  x: string;
+  y: string;
 }
 
-const BarGraph: React.FC<BarGraphProps> = ({ data, label }) => {
+const BarGraph: React.FC<BarGraphProps> = ({ data, label, x, y }) => {
   const history = useHistory();
 
   const onClick = (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {
     const event: any = e;
-    if (event.hasOwnProperty('name')) {
-      history.push(`/category/${label.toLowerCase()}/${event.name}`);
+
+    let keyword: string = '';
+    if (label === 'Nationality') {
+      keyword = 'nat';
+    }
+
+    if (event.hasOwnProperty('country')) {
+      history.push(`/customers/${keyword}/${event.country}`);
     }
   };
   return (
@@ -33,21 +40,15 @@ const BarGraph: React.FC<BarGraphProps> = ({ data, label }) => {
           //   bottom: 5
           // }}
         >
-          <XAxis dataKey='name' />
+          <XAxis dataKey={x} />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey='number' fill='#ad3e9c' onClick={onClick} />
+          <Bar background={{ fill: '#eee' }} dataKey={y} fill='#ad3e9c' onClick={onClick} barSize={25} />
         </BarChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-const mapStateToProps = (store: StoreTypes) => {
-  return {
-    data: natSelector(store)
-  };
-};
-
-export default connect(mapStateToProps)(BarGraph);
+export default BarGraph;

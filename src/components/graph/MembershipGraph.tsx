@@ -9,7 +9,6 @@ export interface BarGraphProps {
 }
 
 const BarGraph: React.FC<BarGraphProps> = ({ data, label }) => {
-  console.log(data);
   return (
     <div className='bar-chart'>
       <p className='bar-chart__label'>{label}</p>
