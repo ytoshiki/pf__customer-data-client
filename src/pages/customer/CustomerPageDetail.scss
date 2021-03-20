@@ -1,0 +1,14 @@
+.customer-page-detail {
+  max-width: 110rem;
+  margin: auto;
+  padding: 2rem 1rem;
+
+  &__title {
+    font-weight: 400;
+    &-wrapper {
+      min-height: 7rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

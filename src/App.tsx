@@ -5,9 +5,6 @@ import { StoreTypes, fetchAllCustomers } from './redux';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Loading from './components/Loading';
 import Navigation from './components/Navigation';
-import GenderCategoryPage from './pages/GenderCategoryPage';
-import AgeCategoryPage from './pages/AgeCategoryPage';
-import NatCategoryPage from './pages/NatCategoryPage';
 import ProductPage from './pages/ProductPage';
 import ProfitPage from './pages/ProfitPage';
 import NewlyRegistered from './pages/customer/newlyRegistered';
@@ -41,15 +38,6 @@ const App: React.FC<AppProps> = ({ customers, fetchCustomers, loading }) => {
       <Navigation />
 
       <Switch>
-        <Route path='/category/gender/:gender'>
-          <GenderCategoryPage />
-        </Route>
-        <Route path='/category/age/:age'>
-          <AgeCategoryPage />
-        </Route>
-        <Route path='/category/nationality/:nat'>
-          <NatCategoryPage />
-        </Route>
         <Route path='/customers/newlyRegistered'>
           <NewlyRegistered />
         </Route>

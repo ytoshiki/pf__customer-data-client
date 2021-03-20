@@ -6,11 +6,12 @@ const customersSelector = (state: StoreTypes) => state.customers.customers;
 // For newly Added Registered Customers
 
 export const newlyRegisteredSelector = createSelector(customersSelector, (customers) => {
-  const now = new Date().setMonth(new Date().getMonth() - 1);
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
 
   const newlyRegistered = customers.filter((customer) => {
     const date = new Date(customer.dateRegistered);
-    return date > new Date(now);
+    return date > start;
   }).length;
 
   return newlyRegistered;

@@ -20,7 +20,7 @@ const RankingGraph: React.FC<RankingGraphProps> = ({ data, label, x, y, others =
     const event: any = e;
 
     if (event.hasOwnProperty('id')) {
-      history.push(`/products/${event.id}`);
+      history.push(`/customers/${event.id}`);
     } else if (event.hasOwnProperty(x)) {
       history.push(`/customers/${event.x}`);
     }
