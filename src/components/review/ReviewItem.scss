@@ -1,0 +1,63 @@
+.review_item {
+  list-style: none;
+  min-height: 6rem;
+  background: var(--color-white-deep);
+  padding: 0.75rem;
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .date {
+    color: rgb(105, 105, 105);
+    font-weight: bold;
+  }
+
+  .description {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    .main {
+      display: flex;
+      align-items: center;
+    }
+
+    .username {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .rate {
+      font-size: 1.1rem;
+      font-weight: bold;
+      padding-left: 0.75rem;
+      justify-content: flex-start;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+    }
+  }
+
+  .image-wrapper {
+    max-width: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    img {
+      width: 100%;
+    }
+  }
+
+  .comment {
+    margin-top: 1.75rem;
+    font-weight: 500;
+    color: rgb(105, 105, 105);
+  }
+}

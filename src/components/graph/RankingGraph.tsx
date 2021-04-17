@@ -8,21 +8,23 @@ export interface RankingGraphProps {
   x: string;
   y: string;
   others: null | string[];
+  link?: string;
 }
 
-const RankingGraph: React.FC<RankingGraphProps> = ({ data, label, x, y, others = null }) => {
+const RankingGraph: React.FC<RankingGraphProps> = ({ data, label, x, y, others = null, link }) => {
   const history = useHistory();
-  if (data.length < 1) {
-    return <div>No Data</div>;
+
+  if (!link) {
+    link = 'customers';
   }
 
   const onClick = (e: React.MouseEvent<SVGPathElement, MouseEvent>) => {
     const event: any = e;
 
     if (event.hasOwnProperty('id')) {
-      history.push(`/customers/${event.id}`);
+      history.push(`/${link}/${event.id}`);
     } else if (event.hasOwnProperty(x)) {
-      history.push(`/customers/${event.x}`);
+      history.push(`/${link}/${event.x}`);
     }
   };
 

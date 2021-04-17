@@ -89,14 +89,18 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
               <span className='data'>{customers.length}</span>
             </div>
           </Link>
-          <div className='customer-card'>
-            Customer Increase In a year <span className='data'>{percentage}%</span>
-          </div>
-          {satisfaction && (
+          <Link to='/'>
+            <div className='customer-card'>
+              Customer Increase In a year <span className='data'>{percentage}%</span>
+            </div>
+          </Link>
+          {/* {satisfaction && ( */}
+          <Link to='/'>
             <div className='customer-card'>
               Over All Satisfactions <span className='data'>{satisfaction}%</span>
             </div>
-          )}
+          </Link>
+          {/* )} */}
         </div>
 
         <div className='customerpage__top'>

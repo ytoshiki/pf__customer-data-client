@@ -1,0 +1,21 @@
+.reviews-container {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: var(--color-white-deep);
+
+  .rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .number {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+  }
+
+  .no-reviews {
+    margin-top: 1rem;
+  }
+}

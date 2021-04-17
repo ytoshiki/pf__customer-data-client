@@ -1,7 +1,8 @@
 .product-top {
   &__avarage-rating {
-    box-shadow: var(--box-shadow);
-    background: var(--color-gb-dark02);
+    // box-shadow: var(--box-shadow);
+    background: var(--color-white-deep);
+    border-radius: var(--border-radius);
     display: flex;
 
     &-facts {
@@ -32,7 +33,7 @@
 
   &__all-rating {
     box-shadow: var(--box-shadow);
-    background: var(--color-gb-dark02);
+    background: var(--color-white-deep);
     margin-bottom: 2rem;
   }
 }

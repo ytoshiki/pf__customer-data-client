@@ -1,0 +1,30 @@
+.review-page-detail {
+  max-width: 110rem;
+  margin: auto;
+  padding: 2rem 1rem;
+
+  &__title {
+    font-weight: 500;
+
+    &-wrapper {
+      min-height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+
+    .number {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+  }
+}

@@ -15,7 +15,7 @@ export interface ProfitCardProps {
   thisYearProfit: number;
 }
 
-const ProfitCards: React.SFC<ProfitCardProps> = ({ purchases, lastWeekProfit, thisWeekProfit, thisMonthProfit, lastMonthProfit, thisYearProfit }) => {
+const ProfitCards: React.FC<ProfitCardProps> = ({ purchases, lastWeekProfit, thisWeekProfit, thisMonthProfit, lastMonthProfit, thisYearProfit }) => {
   const [weekIncrease, setWeekIncrease] = useState(0);
   const [monthIncrease, setMonthIncrease] = useState(0);
   const [weekKeyword, setWeekKeyword] = useState('');
@@ -29,6 +29,12 @@ const ProfitCards: React.SFC<ProfitCardProps> = ({ purchases, lastWeekProfit, th
 
   useEffect(() => {
     if (weekIncrease) {
+      return;
+    }
+
+    if (thisWeekProfit === 0) {
+      setWeekKeyword('Increase');
+      setWeekIncrease(0);
       return;
     }
 
@@ -46,6 +52,12 @@ const ProfitCards: React.SFC<ProfitCardProps> = ({ purchases, lastWeekProfit, th
 
   useEffect(() => {
     if (monthIncrease) {
+      return;
+    }
+
+    if (thisMonthProfit === 0) {
+      setMonthKeyword('increase');
+      setMonthIncrease(0);
       return;
     }
 
@@ -72,7 +84,7 @@ const ProfitCards: React.SFC<ProfitCardProps> = ({ purchases, lastWeekProfit, th
         <div className='sub'>
           <CircularBar percentage={weekIncrease} color={weekKeyword === 'decrease' ? '207, 39, 39' : '102, 201, 102'} />
           <div className='space'></div>
-          {weekIncrease !== 0 ? (
+          {weekKeyword ? (
             <small>
               <span className='data'>
                 {weekIncrease}% {weekKeyword}{' '}
@@ -94,7 +106,7 @@ const ProfitCards: React.SFC<ProfitCardProps> = ({ purchases, lastWeekProfit, th
         <div className='sub'>
           <CircularBar percentage={monthIncrease} color={monthKeyword === 'decrease' ? '207, 39, 39' : '102, 201, 102'} />
           <div className='space'></div>
-          {monthIncrease !== 0 ? (
+          {monthKeyword ? (
             <small>
               <span className='data'>
                 {monthIncrease}% {monthKeyword}

@@ -1,0 +1,36 @@
+.purchase-page-detail {
+  max-width: 110rem;
+  margin: auto;
+  padding: 2rem 1rem;
+
+  &__title {
+    font-weight: 500;
+
+    &-wrapper {
+      min-height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .cards {
+    display: flex;
+    margin-bottom: 2rem;
+
+    .card {
+      padding: 0 3rem;
+      background: var(--color-white-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 8rem;
+      border-radius: var(--border-radius);
+      .data {
+        font-size: 3rem;
+        color: var(--color-dark-deep);
+      }
+    }
+  }
+}

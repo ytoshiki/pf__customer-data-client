@@ -1,0 +1,50 @@
+.reviewTable {
+  max-width: 110rem;
+  border-collapse: collapse;
+  border-radius: 5px;
+
+  font-weight: normal;
+  border: none;
+  white-space: nowrap;
+  background: var(--color-white-deep);
+
+  thead {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid var(--color-border);
+    }
+  }
+
+  td,
+  th {
+    text-align: left;
+    padding: 1rem;
+  }
+
+  th {
+    text-transform: uppercase;
+  }
+
+  tr {
+    text-align: left;
+  }
+
+  td {
+    padding-right: 5px;
+  }
+
+  .image-container {
+    display: flex;
+    align-items: center;
+    max-width: 3rem;
+    border-radius: 50px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+    }
+  }
+}

@@ -11,7 +11,7 @@ export const thisWeekProfitSelector = createSelector(purchasesSelector, (purchas
       if (purchase.product !== null) {
         return true;
       }
-
+      
       return false;
     })
     .filter((purchase) => {
@@ -25,6 +25,7 @@ export const thisWeekProfitSelector = createSelector(purchasesSelector, (purchas
 
   return profit;
 });
+
 
 export const lastWeekProfitSelector = createSelector(purchasesSelector, (purchases) => {
   const start = new Date().setDate(new Date().getDate() - 14);

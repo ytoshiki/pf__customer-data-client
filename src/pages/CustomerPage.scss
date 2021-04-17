@@ -1,24 +1,46 @@
 .customerpage {
-  max-width: 110rem;
-  padding: 2rem 1rem;
-  margin: auto;
+  padding: 2rem 1rem 2rem 8rem;
+  // margin: auto;
+  width: 100%;
 
   .customer-cards {
     display: flex;
-    justify-content: space-between;
+
+    margin-bottom: 2rem;
+
+    a {
+      display: block;
+      min-height: 9rem;
+      background: var(--color-white-deep);
+      margin-right: 0px;
+      border-radius: var(--border-radius);
+      flex-basis: calc(25% - 20px);
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:not(:last-child) {
+        margin-right: 26.6px;
+      }
+    }
 
     .customer-card {
       min-height: 9rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+
       justify-content: center;
-      color: rgba(#fff, 0.7);
+      color: rgba(var(--color-dark-deep), 0.7);
+
+      &:not(:last-child) {
+        margin-right: 26.6px;
+      }
     }
 
     .data {
       font-size: 3.5rem;
-      color: #fff;
+      color: var(--color-dark-deep);
     }
   }
 
@@ -30,7 +52,8 @@
 
   &__membership {
     flex-basis: 49%;
-    box-shadow: var(--box-shadow);
+    // box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
   }
 
   h2 {
@@ -43,8 +66,9 @@
     display: flex;
     flex-basis: 49%;
 
-    box-shadow: var(--box-shadow);
-    background: var(--color-gb-dark02);
+    // box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    background: var(--color-white-deep);
   }
 
   &__right {

@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { dateFormatter, generateKey } from '../../helpers';
 import logo from '../../images/avator.png';
+import './CustomerTable.scss';
 
 export interface TableProps {
   data: any[];
@@ -8,7 +9,7 @@ export interface TableProps {
   body: string[];
 }
 
-const CustomerTable: React.SFC<TableProps> = ({ data, head, body }) => {
+const CustomerTable: React.FC<TableProps> = ({ data, head, body }) => {
   const history = useHistory();
 
   const onClick = (id: string) => {
@@ -16,7 +17,7 @@ const CustomerTable: React.SFC<TableProps> = ({ data, head, body }) => {
   };
 
   return (
-    <table>
+    <table className='customer-table'>
       <thead>
         <tr>
           {head.map((th, index) => (
@@ -30,8 +31,8 @@ const CustomerTable: React.SFC<TableProps> = ({ data, head, body }) => {
             {body.map((td, index) => {
               if (index === 0 && td === 'username') {
                 return (
-                  <td key={generateKey(String(index))}>
-                    <div>
+                  <td key={generateKey(String(index))} className='customer-td'>
+                    <div className='image-container'>
                       <img src={obj['avator'] !== null ? obj['avator'] : logo} alt='' />
                     </div>
                     <span>{obj[td]}</span>

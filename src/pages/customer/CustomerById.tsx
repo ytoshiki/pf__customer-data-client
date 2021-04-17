@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import PurchaseList from '../../components/list/PurchaseList';
 import Table from '../../components/table/CustomerTable';
-
+import { dateFormatter, generateKey, kFormatter } from '../../helpers';
+import logo from '../../images/avator.png';
+import { ReviewData } from '../review/AllReviews';
 import { CustomerData } from './newlyRegistered';
+import { Link } from 'react-router-dom';
 
 export interface ProductData {
   _id: string;
@@ -14,20 +17,22 @@ export interface ProductData {
 
 export interface PurchaseData {
   _id: string;
-  product: null | ProductData;
+  product: ProductData;
   customer: string;
   createdAt: string;
 }
 
 export interface CustomerByIdProps {}
 
-const CustomerById: React.SFC<CustomerByIdProps> = () => {
+const CustomerById: React.FC<CustomerByIdProps> = () => {
+  const history = useHistory();
   const params = useParams();
 
   const id: string = (params as any).id;
 
   const [customer, setCustomer] = useState<CustomerData>();
   const [purchases, setPurchases] = useState<PurchaseData[]>([]);
+  const [reviews, setReviews] = useState<ReviewData[]>([]);
 
   useEffect(() => {
     if (customer) {
@@ -35,15 +40,19 @@ const CustomerById: React.SFC<CustomerByIdProps> = () => {
     }
 
     const fetchCustomer = async () => {
-      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/customers/${id}`);
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/customers/${id}`);
 
-      const data = await response.data;
+        const data = await response.data;
 
-      if (!data.success) {
-        console.log(data.message || 'FETCH ERROR');
+        if (!data.success) {
+          return;
+        }
+
+        setCustomer(data.customer);
+      } catch (error) {
+        return;
       }
-
-      setCustomer(data.customer);
     };
 
     if (!customer) {
@@ -57,15 +66,19 @@ const CustomerById: React.SFC<CustomerByIdProps> = () => {
     }
 
     const logPurchases = async () => {
-      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/purchase/${id}`);
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/purchase/${id}`);
 
-      const data = await response.data;
+        const data = await response.data;
 
-      if (!data.success) {
-        console.log(data.message || 'FETCH ERROR');
+        if (!data.success) {
+          return;
+        }
+
+        setPurchases(data.purchases);
+      } catch (error) {
+        return;
       }
-
-      setPurchases(data.purchases);
     };
 
     if (purchases.length === 0) {
@@ -73,18 +86,124 @@ const CustomerById: React.SFC<CustomerByIdProps> = () => {
     }
   }, [id, purchases, setPurchases]);
 
+  useEffect(() => {
+    if (reviews.length > 0) {
+      return;
+    }
+
+    const logReviews = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/reviews/customer/${id}`);
+
+        const data = await response.data;
+
+        if (!data.success) {
+          return;
+        }
+
+        setReviews(data.reviews);
+      } catch (error) {
+        return;
+      }
+    };
+
+    if (reviews.length === 0) {
+      logReviews();
+    }
+  }, [id, reviews, setReviews]);
+
+  const onClick = (id: string) => {
+    history.push(`/reviews/${id}`);
+  };
+
+  const checkReviewed = (product_id: string) => {
+    let result: string | Element = '';
+
+    if (reviews) {
+      reviews.forEach((review) => {
+        if ((review.product as any)._id === product_id) {
+          (result as any) = <div onClick={() => onClick(review._id)}>View</div>;
+          return result;
+        }
+      });
+    }
+
+    return result;
+  };
+
   return (
     <div>
       <div className='customer-page-detail'>
-        <div className='customer-page-detail__title-wrapper'>
+        {/* <div className='customer-page-detail__title-wrapper'>
           <h1 className='customer-page-detail__title'>Customer with ID of {id}</h1>
-        </div>
+        </div> */}
 
-        {customer && <Table data={[customer]} head={['name', 'date', 'email']} body={['username', 'dateRegistered', 'email']} />}
-        {purchases && (
-          <div>
-            <h2>Purchases</h2>
-            {purchases.length > 0 && <PurchaseList items={purchases} />}
+        {customer && (
+          <div className='customer-individual'>
+            <div className='customer-individual__profile'>
+              <div className='content'>
+                <div className='img-wrapper'>
+                  <img src={customer.avator ? customer.avator : logo} alt='' />
+                </div>
+                <div className='detail'>
+                  <p className='name'>{customer.username}</p>
+                  <div className='email'>{customer.email}</div>
+                </div>
+              </div>
+            </div>
+            <div className='customer-individual-cards'>
+              <div className='card'>
+                <p>Total Expenses</p>
+                <span className='data'>
+                  {purchases.length > 0
+                    ? '$' +
+                      kFormatter(
+                        purchases.reduce(function (acc, obj) {
+                          return acc + obj.product.price;
+                        }, 0)
+                      )
+                    : 0}
+                </span>
+              </div>
+              <div className='card'>
+                <p>Reviews</p>
+                <span className='data'>{reviews.length}</span>
+              </div>
+            </div>
+            <div className='customer-individual__purchases'>
+              <h2>Items Purchased</h2>
+              {purchases.length > 0 ? (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Item</th>
+                      <th>Price($)</th>
+                      <th>Date</th>
+                      <th>Review</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {purchases.map((purchase, index) => (
+                      <tr key={generateKey(purchase._id)}>
+                        <td>
+                          <div className='product-item'>
+                            <div className='image-wrapper'>
+                              <img src={(purchase.product as any).images[0]} alt='' />
+                            </div>
+                            <span>{purchase.product?.name}</span>
+                          </div>
+                        </td>
+                        <td>{purchase.product?.price}</td>
+                        <td>{dateFormatter(purchase.createdAt)}</td>
+                        <td>{checkReviewed(purchase.product._id)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                'No Purchase Record'
+              )}
+            </div>
           </div>
         )}
       </div>

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { CustomerData } from './newlyRegistered';
 import logo from '../../images/avator.png';
 import '../Pagination.scss';
+import CustomerTable from '../../components/table/CustomerTable';
 
 export interface AllCustomersProps {}
 
@@ -90,61 +91,62 @@ const AllCustomers: React.SFC<AllCustomersProps> = () => {
   return (
     <div className='customer-page-detail'>
       <div className='customer-page-detail__title-wrapper'>
-        <h1 className='customer-page-detail__title'>Customers</h1>
+        <h1 className='customer-page-detail__title'>All Customers</h1>
       </div>
-      <div className='sort'>
-        <label htmlFor=''>Sort</label>
-        <select onChange={(e) => setSort(e.target.value)}>
-          <option value='date' defaultChecked>
-            Date
-          </option>
-          <option value='name'>Name</option>
-        </select>
 
-        <label htmlFor=''>Order</label>
-        <select onChange={(e) => setBy(e.target.value)}>
-          <option value='desc' defaultChecked>
-            Desc
-          </option>
-          <option value='insc'>Insc</option>
-        </select>
-
-        <button onClick={sortCustomers}>Submit</button>
+      <div className='customer-page-cards'>
+        <div className='card'>
+          <h2>Total Customers</h2>
+          <p>{pageInfo?.total}</p>
+        </div>
       </div>
+
       {pageInfo?.data && (
         <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Registered</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pageInfo.data.map((customer) => (
-                <tr key={customer._id}>
-                  <td>
-                    {customer.avator !== null ? <img src={customer.avator} alt='' style={{ maxWidth: '70px' }} /> : <img src={logo} alt='' style={{ width: '30px' }} />}
-                    <span>{customer.username}</span>
-                  </td>
-                  <td>{customer.dateRegistered}</td>
-                  <td>{customer.email}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className='sort'>
+            <div className='sort-block'>
+              <label htmlFor=''>Filter by:</label>
+              <select onChange={(e) => setSort(e.target.value)}>
+                <option value='date' defaultChecked>
+                  Date
+                </option>
+                <option value='name'>Name</option>
+              </select>
+            </div>
+
+            <div className='sort-block'>
+              <label htmlFor=''>Order by:</label>
+              <select onChange={(e) => setBy(e.target.value)}>
+                <option value='desc' defaultChecked>
+                  Desc
+                </option>
+                <option value='insc'>Insc</option>
+              </select>
+            </div>
+
+            <button onClick={sortCustomers}>Submit</button>
+          </div>
+          <CustomerTable data={pageInfo.data} head={['Name', 'Age', 'gender', 'Nat', 'Email', 'Registered']} body={['username', 'age', 'gender', 'nat', 'email', 'dateRegistered']} />
+
           <div className='pagination'>
-            {pageInfo.pre_page && <button onClick={() => changePage(pageInfo.page - 1)}>Previous</button>}
+            {pageInfo.pre_page && (
+              <button onClick={() => changePage(pageInfo.page - 1)} className='prev-button'>
+                Previous
+              </button>
+            )}
             {pages &&
               pages.map((page) => {
                 return (
-                  <button key={page} className={page === pageInfo.page ? 'current_page' : ''}>
+                  <button onClick={() => changePage(page)} key={page} className={page === pageInfo.page ? 'current_page' : ''}>
                     {page}
                   </button>
                 );
               })}
-            {pageInfo.next_page && <button onClick={() => changePage(pageInfo.page + 1)}>Next</button>}
+            {pageInfo.next_page && (
+              <button onClick={() => changePage(pageInfo.page + 1)} className='next-button'>
+                Next
+              </button>
+            )}
           </div>
         </div>
       )}

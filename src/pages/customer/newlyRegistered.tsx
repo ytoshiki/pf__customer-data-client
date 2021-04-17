@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './CustomerPageDetail.scss';
 import logo from '../../images/avator.png';
+import CustomerTable from '../../components/table/CustomerTable';
 
 export interface NewlyRegisteredProps {}
 
@@ -51,35 +52,14 @@ const NewlyRegistered: React.FC<NewlyRegisteredProps> = () => {
           Customers Registered on {monthNames[new Date().getMonth()]} {new Date().getFullYear()}
         </h1>
       </div>
-      {customers.length > 0 ? (
-        <div>
-          <h3>Total Number</h3>
-          <span>{customers.length}</span>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Registered</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              {customers.map((customer) => (
-                <tr key={customer._id}>
-                  <td>
-                    {customer.avator !== null ? <img src={customer.avator} alt='' /> : <img src={logo} alt='' style={{ maxWidth: '100px' }} />}
-                    <span>{customer.username}</span>
-                  </td>
-                  <td>{customer.dateRegistered}</td>
-                  <td>{customer.email}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className='customer-page-cards'>
+        <div className='card'>
+          <h2>Total Customers</h2>
+          <p>{customers.length}</p>
         </div>
-      ) : (
-        'No Customers'
-      )}
+      </div>
+      <div className='mg-30-bottom'></div>
+      {customers.length > 0 ? <CustomerTable data={customers} head={['Name', 'Age', 'gender', 'Nat', 'Email', 'Registered']} body={['username', 'age', 'gender', 'nat', 'email', 'dateRegistered']} /> : 'No Customers'}
     </div>
   );
 };

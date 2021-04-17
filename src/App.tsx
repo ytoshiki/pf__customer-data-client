@@ -18,6 +18,10 @@ import AllProducts from './pages/product/AllProducts';
 import AllReviews from './pages/review/AllReviews';
 import ProductById from './pages/product/ProductById';
 import PurchasesByTerm from './pages/purchase/PurchasesByTerm';
+import ReviewById from './pages/review/ReviewById';
+import AddProduct from './pages/AddProductPage';
+import AddAdmin from './pages/AddAdminPage';
+import EditProductPage from './pages/edit/EditProductPage';
 
 export interface AppProps {
   customers: any;
@@ -71,11 +75,23 @@ const App: React.FC<AppProps> = ({ customers, fetchCustomers, loading }) => {
         <Route path='/reviews/all'>
           <AllReviews />
         </Route>
+        <Route path='/reviews/:id'>
+          <ReviewById />
+        </Route>
         <Route exact={true} path='/profit'>
           <ProfitPage />
         </Route>
         <Route path='/profit/:term'>
           <PurchasesByTerm />
+        </Route>
+        <Route path='/add/product'>
+          <AddProduct />
+        </Route>
+        <Route path='/register'>
+          <AddAdmin />
+        </Route>
+        <Route path='/edit/product'>
+          <EditProductPage />
         </Route>
         <Route path='/' exact>
           <CustomerPage />

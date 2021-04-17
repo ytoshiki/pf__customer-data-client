@@ -150,7 +150,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ products, fetchProducts, newl
       <ProductTop />
       {rankingData.length && (
         <div>
-          <RankingGraph label='Most Purchased Products' data={rankingData} x='name' y='sold' others={['price']} />
+          <RankingGraph label='Most Purchased Products' data={rankingData} x='name' y='sold' others={['price']} link='products' />
         </div>
       )}
     </div>
