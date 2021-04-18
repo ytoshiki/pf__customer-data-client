@@ -1,27 +1,32 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchAllCategories, StoreTypes } from '../../redux';
-import { Category, categoryReducer } from '../../redux/reducers/category/categoryReducer';
+import { ProductData } from '../../pages/customer/CustomerById';
+import { addProduct, fetchAllCategories, StoreTypes } from '../../redux';
+import { Category } from '../../redux/reducers/category/categoryReducer';
 import ProductModal from '../modal/ProductModal';
 
 export interface ProductFormProps {
   categories: Category[];
   fetchCategories: any;
+  addNewProduct: any;
 }
 
-const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories }) => {
-  const [openModal, setOpenModal] = useState(false);
+export interface ProductFormData {
+  name: string;
+  price: string;
+  images: {
+    img1: string;
+    img2: string;
+  };
+  category: string;
+}
 
-  const [form, setForm] = useState<{
-    name: string;
-    price: string;
-    images: {
-      img1: string;
-      img2: string;
-    };
-    category: string;
-  }>({
+const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, addNewProduct }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const [form, setForm] = useState<ProductFormData>({
     name: '',
     price: '',
     images: {
@@ -35,7 +40,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories }
     name: '',
     price: '',
     image: '',
-    category: ''
+    category: '',
+    request: ''
   });
 
   useEffect(() => {
@@ -48,21 +54,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories }
 
   const addProduct = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_ENDPOINT}/products`;
-      const request = await axios.post(url, {
-        name: form.name,
-        price: Number(form.price),
-        category: form.category,
-        images: [form.images.img1, form.images.img2]
-      });
+      const success = await addNewProduct(form);
 
-      const data = await request.data;
-
-      if (!data.success) {
-        console.log(data.error || 'FETCHER ERROR');
+      if (!success) {
+        setError({ ...error, request: 'Something went wrong. Try again' });
+        return;
       }
 
-      console.log(data);
+      setSuccessMessage('Product Added Successfully');
     } catch (error) {}
   };
 
@@ -71,7 +70,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories }
       name: '',
       price: '',
       category: '',
-      image: ''
+      image: '',
+      request: ''
     });
     let result = true;
 
@@ -120,6 +120,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories }
 
   return (
     <>
+      {successMessage && successMessage}
+      {error.request && error.request}
       <ProductModal isOpen={openModal} setIsOpen={setOpenModal} data={form} comfirm={addProduct} />
       <form onSubmit={onSubmit}>
         <div>
@@ -173,7 +175,8 @@ const mapStateToProps = (store: StoreTypes) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    fetchCategories: () => dispatch(fetchAllCategories())
+    fetchCategories: () => dispatch(fetchAllCategories()),
+    addNewProduct: (form: ProductFormData) => dispatch(addProduct(form))
   };
 };
 

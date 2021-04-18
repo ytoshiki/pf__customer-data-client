@@ -40,6 +40,12 @@ export const categoryReducer = (state: StateTypes = initialState, action: Action
         categories: action.payload,
         loading: false
       };
+    case CategoryActionName.ADD_CATEGORY:
+      return {
+        ...state,
+        categories: state.categories.push(action.payload),
+        loading: false
+      };
     default:
       return state;
   }

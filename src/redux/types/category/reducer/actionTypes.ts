@@ -10,4 +10,9 @@ interface INIT {
   type: CategoryActionName.START_CATEGORIES_ACTION;
 }
 
-export type ActionTypes = FETCH_CATEGORIES | INIT;
+interface ADD_CATEGORY {
+  type: CategoryActionName.ADD_CATEGORY;
+  payload: Category;
+}
+
+export type ActionTypes = FETCH_CATEGORIES | INIT | ADD_CATEGORY;

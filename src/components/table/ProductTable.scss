@@ -22,12 +22,14 @@
   }
 
   tbody {
-    tr:hover {
-      opacity: 0.5;
-    }
-
     tr {
       border-bottom: 1px solid var(--color-border);
+
+      &.is-hover {
+        &:hover {
+          opacity: 0.6;
+        }
+      }
     }
   }
 

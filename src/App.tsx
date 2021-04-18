@@ -22,6 +22,8 @@ import ReviewById from './pages/review/ReviewById';
 import AddProduct from './pages/AddProductPage';
 import AddAdmin from './pages/AddAdminPage';
 import EditProductPage from './pages/edit/EditProductPage';
+import EditCategoryPage from './pages/edit/EditCategoryPage';
+import AddCategoryPaeg from './pages/AddCategoryPage';
 
 export interface AppProps {
   customers: any;
@@ -87,11 +89,17 @@ const App: React.FC<AppProps> = ({ customers, fetchCustomers, loading }) => {
         <Route path='/add/product'>
           <AddProduct />
         </Route>
+        <Route path='/add/category'>
+          <AddCategoryPaeg />
+        </Route>
         <Route path='/register'>
           <AddAdmin />
         </Route>
         <Route path='/edit/product'>
           <EditProductPage />
+        </Route>
+        <Route path='/edit/category'>
+          <EditCategoryPage />
         </Route>
         <Route path='/' exact>
           <CustomerPage />

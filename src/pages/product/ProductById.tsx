@@ -18,7 +18,7 @@ export interface ProductDetail {
   category: {
     _id: string;
     name: string;
-  };
+  } | null;
   price: number;
   createdAt: string;
 }
@@ -68,7 +68,7 @@ const ProductById: React.FC<ProductByIdProps> = () => {
               </div>
               <div>
                 <h3>{product.name}</h3>
-                <p className='category'>{product.category.name}</p>
+                <p className='category'>{product.category !== null && product.category.name}</p>
                 <p className='price'>${product.price}</p>
                 <p className='date'>Added on {dateFormatter(product.createdAt)}</p>
                 <div className='options'>

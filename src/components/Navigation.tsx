@@ -45,7 +45,7 @@ const Navigation: React.FC<NavigationProps> = () => {
         <li>
           <ul className='navigation__menu'>
             <li className='navigation__menu-item'>
-              <Link to='/add/product' className='navigation__menu-link'>
+              <Link to='/edit/category' className='navigation__menu-link'>
                 {/* <div>
                   <img src={ProductLogo} alt='' />
                 </div> */}
@@ -74,7 +74,7 @@ const Navigation: React.FC<NavigationProps> = () => {
               </Link>
             </li>
             <li className='navigation__menu-item'>
-              <Link to='/register' className='navigation__menu-link'>
+              <Link to='/add/category' className='navigation__menu-link'>
                 {/* <div>
                   <img src={ProductLogo} alt='' />
                 </div> */}

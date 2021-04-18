@@ -32,6 +32,24 @@ export const productReducer = (state: StateTypes = initialState, action: ActionT
         products: action.payload,
         loading: false
       };
+    case ProductActionName.ADD_PRODUCT:
+      return {
+        ...state,
+        products: state.products.push(action.payload),
+        loading: false
+      };
+    case ProductActionName.UPDATE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.push(action.payload),
+        loading: false
+      };
+    case ProductActionName.DELETE_PRODUCT:
+      return {
+        ...state,
+        products: state.products.filter((product) => product.id !== action.payload.id),
+        loading: false
+      };
     default:
       return state;
   }

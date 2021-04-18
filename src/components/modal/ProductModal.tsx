@@ -1,8 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Img } from 'react-image';
 import Modal from 'react-modal';
-import { setConstantValue } from 'typescript';
 import './Modal.scss';
 
 export interface ProductModalProps {
@@ -86,7 +84,14 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, setIsOpen, data, co
           </div>
         </div>
         <button onClick={() => setIsOpen(false)}>Close</button>
-        <button onClick={comfirm}>Comfirm</button>
+        <button
+          onClick={() => {
+            comfirm();
+            setIsOpen(false);
+          }}
+        >
+          Comfirm
+        </button>
       </Modal>
     </div>
   );

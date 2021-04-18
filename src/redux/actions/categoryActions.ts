@@ -1,5 +1,6 @@
 import { CategoryActionName } from '../types/category/actionName';
 import axios from 'axios';
+import { CategoryFormProps } from '../../components/form/CategoryForm';
 
 interface CategoryData {
   name: string;
@@ -42,5 +43,43 @@ export const fetchAllCategories = () => {
         payload: categories_02
       });
     } catch (error) {}
+  };
+};
+
+export const addCategory = (form: any) => {
+  return async (dispatch: any) => {
+    dispatch({
+      type: CategoryActionName.START_CATEGORIES_ACTION
+    });
+
+    try {
+      const response_01 = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/categories`, form);
+      const data_01 = await response_01.data;
+
+      if (!data_01.success) {
+        throw new Error(data_01.message || 'Fetch Error');
+      }
+
+      const category: CategoryData = data_01.newCategory;
+
+      const categories_02 = {
+        id: category._id,
+        name: category.name,
+        image: category.image,
+        heading: category.heading,
+        paragraph: category.paragraph,
+        products: category.products
+      };
+
+      dispatch({
+        type: CategoryActionName.ADD_CATEGORY,
+        payload: categories_02
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error.message || 'FETCH ERROR');
+      return false;
+    }
   };
 };

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import ProductTable from '../../components/table/ProductTable';
 import { fetchAllProducts, StoreTypes } from '../../redux';
-import { ProductData } from '../customer/CustomerById';
 import { Product } from '../ProductPage';
 import './EditProduct.scss';
 
@@ -20,7 +19,7 @@ const EditProductPage: React.FC<EditProductPageProps> = ({ products, fetchProduc
     fetchProducts();
   }, [products, fetchProducts]);
 
-  return <div className='edit-product'>{products.length > 0 && <ProductTable data={products} head={['product', '', 'price($)', 'category', 'added']} body={['images', 'name', 'price', 'category_row', 'createdAt', 'update', 'delete']} />}</div>;
+  return <div className='edit-product'>{products.length > 0 && <ProductTable data={products} head={['product', '', 'price($)', 'category', 'added']} body={['images', 'name', 'price', 'category_row', 'createdAt', 'update', 'delete']} link={false} />}</div>;
 };
 
 const mapStateToProps = (store: StoreTypes) => {
