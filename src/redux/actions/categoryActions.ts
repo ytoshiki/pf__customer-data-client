@@ -76,7 +76,7 @@ export const addCategory = (form: any) => {
         payload: categories_02
       });
 
-      return true;
+      return category;
     } catch (error) {
       console.log(error.message || 'FETCH ERROR');
       return false;

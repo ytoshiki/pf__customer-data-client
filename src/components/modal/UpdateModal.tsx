@@ -101,7 +101,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, upda
             </div>
             <div>
               <label htmlFor=''>Category</label>
-              {categories && (
+              {categories.length && (
                 <select
                   value={data?.category}
                   onChange={(e) =>

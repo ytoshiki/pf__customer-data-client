@@ -66,6 +66,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
   };
 
   const onSubmit = (e: any) => {
+    e.preventDefault();
+
     setError({
       name: '',
       price: '',
@@ -73,47 +75,45 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
       image: '',
       request: ''
     });
+
+    const tempoErrors = {
+      name: '',
+      price: '',
+      category: '',
+      image: '',
+      request: ''
+    };
+
     let result = true;
 
-    e.preventDefault();
-
     if (form.name.length < 3) {
-      setError({
-        ...error,
-        name: 'name need to include at least 3 characters'
-      });
+      tempoErrors.name = 'Product name must include 3 characters';
 
       if (result) result = false;
     }
 
     if (!Number(form.price)) {
-      setError({
-        ...error,
-        price: 'price must be number'
-      });
+      tempoErrors.price = 'price must be number';
 
       if (result) result = false;
     }
 
     if (form.images.img1 === '' && form.images.img2 === '') {
-      setError({
-        ...error,
-        image: 'at least one image is needed'
-      });
+      tempoErrors.image = 'at least one image is required';
 
       if (result) result = false;
     }
 
     if (form.category === '') {
-      setError({
-        ...error,
-        category: 'category is needed'
-      });
+      tempoErrors.category = 'Category is required';
 
       if (result) result = false;
     }
 
-    if (!result) return;
+    if (!result) {
+      setError(tempoErrors);
+      return;
+    }
 
     setOpenModal(true);
   };
@@ -127,16 +127,19 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
         <div>
           <label htmlFor=''>name</label>
           <input type='text' onChange={(e) => setForm({ ...form, name: e.target.value })} value={form.name} />
+          {error.name && error.name}
         </div>
         <div>
           <label htmlFor=''>price</label>
           <input type='text' onChange={(e) => setForm({ ...form, price: e.target.value })} value={form.price} />
+          {error.price && error.price}
         </div>
         <div>
           <label htmlFor=''>images</label>
           <small>Up to 2 urls</small>
           <input type='text' onChange={(e) => setForm({ ...form, images: { ...form.images, img1: e.target.value } })} value={form.images.img1} />
           <input type='text' onChange={(e) => setForm({ ...form, images: { ...form.images, img2: e.target.value } })} value={form.images.img2} />
+          {error.image && error.image}
         </div>
         <div>
           <label htmlFor=''>Category</label>
@@ -160,6 +163,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
               })}
             </select>
           )}
+          {error.category && error.category}
         </div>
         <button>Submit</button>
       </form>

@@ -61,10 +61,12 @@ export const addProduct = (form: ProductFormData) => {
       type: ProductActionName.START_PRODUCTS_ACTION
     });
 
+    const imgData = Object.values(form.images).filter((img) => img);
+
     const requestData = {
       name: form.name,
       price: form.price,
-      images: [form.images.img1, form.images.img2],
+      images: imgData,
       category: form.category
     };
     try {
