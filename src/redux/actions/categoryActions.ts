@@ -83,3 +83,61 @@ export const addCategory = (form: any) => {
     }
   };
 };
+
+export const deleteCategoryById = (id: string) => {
+  return async (dispatch: any) => {
+    try {
+      dispatch({
+        type: CategoryActionName.START_CATEGORIES_ACTION
+      });
+
+      const request = await axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/categories/${id}`);
+
+      const response = request.data;
+
+      if (!response.success) {
+        throw new Error(response.message || 'Request Error');
+      }
+
+      dispatch({
+        type: CategoryActionName.DELETE_CATEGORY,
+        payload: response.category
+      });
+
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  };
+};
+
+export const updateCategoryById = (id: string, form: any) => {
+  return async (dispatch: any) => {
+    try {
+      dispatch({
+        type: CategoryActionName.START_CATEGORIES_ACTION
+      });
+
+      const request = await axios.patch(`${process.env.REACT_APP_API_ENDPOINT}/categories/${id}`, form);
+
+      const response = request.data;
+
+      if (!response.success) {
+        throw new Error(response.message || 'Request Error');
+      }
+
+      dispatch({
+        type: CategoryActionName.UPDATE_CATEGORY,
+        payload: response.category
+      });
+
+      console.log('Category updated', response.category);
+
+      return true;
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
+  };
+};

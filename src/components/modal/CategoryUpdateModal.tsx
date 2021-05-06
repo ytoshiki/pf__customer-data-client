@@ -1,23 +1,96 @@
-import { useEffect, useState } from 'react';
-import { Img } from 'react-image';
+import { useState } from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
-import {} from '../../redux';
+import { updateCategoryById } from '../../redux';
 import { CategoryFormData } from '../form/CategoryForm';
 import './Modal.scss';
 
 export interface CategoryUpdateModalProps {
   isOpen: boolean;
   setIsOpen: (bool: boolean) => void;
-  data?: CategoryFormData;
+  data: CategoryFormData;
   update?: any;
   id?: string;
+  updateNewCategory?: any;
 }
 
 Modal.setAppElement('#root');
 
-const CategoryUpdateModal: React.SFC<CategoryUpdateModalProps> = () => {
-  return <div></div>;
+const CategoryUpdateModal: React.SFC<CategoryUpdateModalProps> = ({ isOpen, setIsOpen, data, update, id, updateNewCategory }) => {
+  const [error, setError] = useState('');
+  return (
+    <div>
+      <Modal
+        isOpen={isOpen}
+        style={{
+          overlay: {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(255, 255, 255, 0.75)'
+          },
+          content: {
+            position: 'absolute',
+            top: '40px',
+            left: '400px',
+            right: '40px',
+            bottom: '40px',
+            border: '1px solid #ccc',
+            background: '#fff',
+            overflow: 'auto',
+            WebkitOverflowScrolling: 'touch',
+            borderRadius: '4px',
+            outline: 'none',
+            padding: '20px'
+          }
+        }}
+      >
+        <div className='modal-component'>
+          {error && error}
+          <form
+            onSubmit={(e: any) => {
+              e.preventDefault();
+
+              if (!data.heading || !data.image || !data.name) {
+                setError('You need heading, image, and name');
+                return;
+              }
+              updateNewCategory(id as string, data);
+              setIsOpen(false);
+            }}
+          >
+            <div>
+              <label>Name</label>
+              <input type='text' value={data?.name} onChange={(e) => update({ ...data, name: e.target.value })} />
+            </div>
+            <div>
+              <label>Image</label>
+              <input type='text' value={data?.image} onChange={(e) => update({ ...data, image: e.target.value })} />
+            </div>
+            <div>
+              <label>Heading</label>
+              <input type='text' value={data?.heading} onChange={(e) => update({ ...data, heading: e.target.value })} />
+            </div>
+            <div>
+              <label>Paragraph</label>
+              <input type='text' value={data?.paragraph as string} onChange={(e) => update({ ...data, paragraph: e.target.value })} />
+            </div>
+
+            <button>Submit</button>
+          </form>
+        </div>
+        <button onClick={() => setIsOpen(false)}>Close</button>
+      </Modal>
+    </div>
+  );
 };
 
-export default CategoryUpdateModal;
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    updateNewCategory: (id: string, form: any) => dispatch(updateCategoryById(id, form))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CategoryUpdateModal);

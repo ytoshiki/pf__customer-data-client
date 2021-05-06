@@ -15,4 +15,14 @@ interface ADD_CATEGORY {
   payload: Category;
 }
 
-export type ActionTypes = FETCH_CATEGORIES | INIT | ADD_CATEGORY;
+interface UPDATE_CATEGORY {
+  type: CategoryActionName.UPDATE_CATEGORY;
+  payload: Category;
+}
+
+interface DELETE_CATEGORY {
+  type: CategoryActionName.DELETE_CATEGORY;
+  payload: { _id: string };
+}
+
+export type ActionTypes = FETCH_CATEGORIES | INIT | ADD_CATEGORY | UPDATE_CATEGORY | DELETE_CATEGORY;

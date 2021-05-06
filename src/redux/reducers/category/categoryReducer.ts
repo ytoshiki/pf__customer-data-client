@@ -46,6 +46,18 @@ export const categoryReducer = (state: StateTypes = initialState, action: Action
         categories: state.categories.push(action.payload),
         loading: false
       };
+    case CategoryActionName.UPDATE_CATEGORY:
+      return {
+        ...state,
+        categories: state.categories.push(action.payload),
+        loading: false
+      };
+    case CategoryActionName.DELETE_CATEGORY:
+      return {
+        ...state,
+        categories: state.categories.filter((product) => product.id !== action.payload._id),
+        loading: false
+      };
     default:
       return state;
   }
