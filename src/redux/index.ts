@@ -6,3 +6,4 @@ export * from './actions/categoryActions';
 export * from './actions/productActions';
 export * from './selectors/product';
 export * from './selectors/purchase';
+export * from './actions/adminActions';

@@ -53,4 +53,8 @@ export interface StoreTypes {
   };
   reviews: ReviewTypes;
   purchases: PurchaseTypes;
+  admin: {
+    name: string;
+    token: string;
+  };
 }

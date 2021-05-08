@@ -9,15 +9,16 @@ export interface CategoryUpdateModalProps {
   isOpen: boolean;
   setIsOpen: (bool: boolean) => void;
   data: CategoryFormData;
-  update?: any;
-  id?: string;
-  updateNewCategory?: any;
+  update: any;
+  id: string;
+  updateNewCategory: any;
 }
 
 Modal.setAppElement('#root');
 
-const CategoryUpdateModal: React.SFC<CategoryUpdateModalProps> = ({ isOpen, setIsOpen, data, update, id, updateNewCategory }) => {
+const CategoryUpdateModal: React.FC<CategoryUpdateModalProps> = ({ isOpen, setIsOpen, data, update, id, updateNewCategory }) => {
   const [error, setError] = useState('');
+
   return (
     <div>
       <Modal
@@ -75,7 +76,7 @@ const CategoryUpdateModal: React.SFC<CategoryUpdateModalProps> = ({ isOpen, setI
             </div>
             <div>
               <label>Paragraph</label>
-              <input type='text' value={data?.paragraph as string} onChange={(e) => update({ ...data, paragraph: e.target.value })} />
+              <input type='text' value={typeof data.paragraph == 'string' ? (data.paragraph as string) : ''} onChange={(e) => update({ ...data, paragraph: e.target.value })} />
             </div>
 
             <button>Submit</button>

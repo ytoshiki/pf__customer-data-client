@@ -100,7 +100,7 @@ const ProductTable: React.SFC<ProductTableProps> = ({ data, head, body, hover, l
                     </td>
                   );
                 } else if (td === 'category') {
-                  return <td key={generateKey(String(index))}>{obj[td].name}</td>;
+                  return <td key={generateKey(String(index))}>{obj[td] ? obj[td].name : 'None'}</td>;
                 } else if (td === 'category_row') {
                   return <td key={generateKey(String(index))}>{obj['category']}</td>;
                 } else if (td === 'update') {

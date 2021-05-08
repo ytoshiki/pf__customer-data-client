@@ -35,8 +35,14 @@ const ProfitCards: React.FC<ProfitCardProps> = ({ purchases, lastWeekProfit, thi
     if (thisWeekProfit === 0) {
       setWeekKeyword('Increase');
       setWeekIncrease(0);
-      return;
     }
+
+    if (lastWeekProfit === 0) {
+      setWeekKeyword('Increase');
+      setWeekIncrease(0);
+    }
+
+    if (lastWeekProfit === 0 || thisWeekProfit === 0) return;
 
     let increase = thisWeekProfit - lastWeekProfit;
     increase = (increase / lastWeekProfit) * 100;
@@ -61,7 +67,11 @@ const ProfitCards: React.FC<ProfitCardProps> = ({ purchases, lastWeekProfit, thi
       return;
     }
 
-    const increase = (lastMonthProfit / thisMonthProfit) * 100;
+    let increase = thisMonthProfit - lastMonthProfit;
+    increase = (increase / lastMonthProfit) * 100;
+
+    // const increase = (lastMonthProfit / thisMonthProfit) * 100;
+    // increase = (increase / lastWeekProfit) * 100;
 
     if (increase > 0) {
       setMonthKeyword('increase');
@@ -76,7 +86,7 @@ const ProfitCards: React.FC<ProfitCardProps> = ({ purchases, lastWeekProfit, thi
     <div className='profit-cards'>
       <div className='profit-cards__card'>
         <div className='main'>
-          <Link to='profit/week'>
+          <Link to={thisWeekProfit ? 'profit/week' : '/profit'}>
             <h3>This Week's Profit</h3>
             <span className='data'>${kFormatter(thisWeekProfit)}</span>
           </Link>
@@ -98,7 +108,7 @@ const ProfitCards: React.FC<ProfitCardProps> = ({ purchases, lastWeekProfit, thi
       </div>
       <div className='profit-cards__card'>
         <div className='main'>
-          <Link to='profit/month'>
+          <Link to={thisMonthProfit ? 'profit/month' : '/profit'}>
             <h3>This Month's Profit</h3>
             <span className='data'>${kFormatter(thisMonthProfit)}</span>
           </Link>

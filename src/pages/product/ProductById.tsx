@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
-import { ProductData } from '../customer/CustomerById';
+
 import axios from 'axios';
 import Slideshow from '../../components/slider/Slide';
-import ProductTable from '../../components/table/ProductTable';
+
 import { dateFormatter } from '../../helpers';
 import ReviewContainer from '../../components/review/ReviewContainer';
 import { ReviewData } from '../review/AllReviews';
@@ -29,6 +29,7 @@ const ProductById: React.FC<ProductByIdProps> = () => {
   const id: string = (params as any).id;
 
   const [product, setProduct] = useState<ProductDetail>();
+  const [purchases, setPurchases] = useState<any[]>([]);
 
   useEffect(() => {
     if (product) {
@@ -52,14 +53,26 @@ const ProductById: React.FC<ProductByIdProps> = () => {
     }
   }, [product, setProduct, id]);
 
-  console.log(product);
+  useEffect(() => {
+    if (purchases.length) return;
+
+    const fetchPurchases = async () => {
+      try {
+        const request = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/purchase/product/${id}`);
+        const response = request.data;
+
+        if (!response.success) throw new Error(response.message);
+
+        setPurchases(response.purchases);
+      } catch (error) {}
+    };
+
+    fetchPurchases();
+  }, [purchases, setPurchases, id]);
 
   return (
     <div>
       <div className='product-page-detail'>
-        {/* <div className='product-page-detail__title-wrapper'>
-          <h1 className='product-page-detail__title'>Product with ID of {id}</h1>
-        </div> */}
         {product && (
           <div className='product-detail'>
             <div className='heading'>
@@ -81,7 +94,7 @@ const ProductById: React.FC<ProductByIdProps> = () => {
             <div className='cards'>
               <div className='card'>
                 <h3>Sold</h3>
-                <p>0</p>
+                <p>{purchases.length}</p>
               </div>
               <div className='card'>
                 <h3>Reviews</h3>
