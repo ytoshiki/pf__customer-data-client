@@ -1,6 +1,7 @@
 .customer-page-detail {
-  max-width: 110rem;
-  margin: auto;
+  // max-width: 110rem;
+  // margin: auto;
+  width: 100%;
   padding: 2rem 1rem;
 
   &__title {
@@ -53,7 +54,7 @@
     display: flex;
 
     label {
-      padding-right: 2rem;
+      margin-right: 0.5rem;
     }
 
     select {
@@ -85,7 +86,7 @@
     }
 
     button {
-      background: var(--color-orange);
+      background: var(--color-gb-dark);
       border: none;
       color: white;
       padding: 0 2rem;
@@ -114,8 +115,7 @@
 
   .customer-individual {
     display: flex;
-    max-width: 80rem;
-    margin: auto;
+
     align-items: flex-start;
     flex-direction: column;
 
@@ -151,7 +151,7 @@
 
     &__profile {
       background: var(--color-dark-middle);
-      // box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
       border-radius: 10px;
       color: rgb(243, 241, 241);
       width: 100%;
@@ -215,7 +215,7 @@
 
       thead {
         border-bottom: 1px solid var(--color-border);
-        background: var(--color-gb-dark);
+        background: var(--color-dark-middle);
         color: white;
       }
 
@@ -243,6 +243,10 @@
         span {
           padding-left: 1rem;
         }
+      }
+
+      .pointer {
+        cursor: pointer;
       }
 
       .image-wrapper {

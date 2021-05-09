@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
-import PurchaseList from '../../components/list/PurchaseList';
-import Table from '../../components/table/CustomerTable';
 import { dateFormatter, generateKey, kFormatter } from '../../helpers';
 import logo from '../../images/avator.png';
 import { ReviewData } from '../review/AllReviews';
 import { CustomerData } from './newlyRegistered';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 export interface ProductData {
@@ -130,6 +130,7 @@ const CustomerById: React.FC<CustomerByIdProps> = () => {
 
     return result;
   };
+  console.log(purchases);
 
   return (
     <div>
@@ -155,6 +156,7 @@ const CustomerById: React.FC<CustomerByIdProps> = () => {
               <div className='card'>
                 <p>Total Expenses</p>
                 <span className='data'>
+                  <FontAwesomeIcon icon={faShoppingCart} className='card-icon-md' />
                   {purchases.length > 0
                     ? '$' +
                       kFormatter(
@@ -167,7 +169,10 @@ const CustomerById: React.FC<CustomerByIdProps> = () => {
               </div>
               <div className='card'>
                 <p>Reviews</p>
-                <span className='data'>{reviews.length}</span>
+                <span className='data'>
+                  <FontAwesomeIcon icon={faPen} className='card-icon-md' />
+                  {reviews.length}
+                </span>
               </div>
             </div>
             <div className='customer-individual__purchases'>
@@ -186,16 +191,18 @@ const CustomerById: React.FC<CustomerByIdProps> = () => {
                     {purchases.map((purchase, index) => (
                       <tr key={generateKey(purchase._id)}>
                         <td>
-                          <div className='product-item'>
-                            <div className='image-wrapper'>
-                              <img src={(purchase.product as any).images[0]} alt='' />
+                          <Link to={`/products/${purchase.product._id}`}>
+                            <div className='product-item'>
+                              <div className='image-wrapper'>
+                                <img src={(purchase.product as any).images[0]} alt='' />
+                              </div>
+                              <span>{purchase.product?.name}</span>
                             </div>
-                            <span>{purchase.product?.name}</span>
-                          </div>
+                          </Link>
                         </td>
                         <td>{purchase.product?.price}</td>
                         <td>{dateFormatter(purchase.createdAt)}</td>
-                        <td>{checkReviewed(purchase.product._id)}</td>
+                        <td className={checkReviewed(purchase.product._id) && 'pointer'}>{checkReviewed(purchase.product._id)}</td>
                       </tr>
                     ))}
                   </tbody>

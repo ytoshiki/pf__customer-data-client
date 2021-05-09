@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { PageData } from './AllCustomers';
 import { useParams } from 'react-router';
 import CustomerTable from '../../components/table/CustomerTable';
+import SearchCustomer from '../../components/search/SearchCustomer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter, faSort, faUser } from '@fortawesome/free-solid-svg-icons';
 
 export interface CustomerByNatProps {}
 
@@ -85,34 +88,56 @@ const CustomersByNat: React.FC<CustomerByNatProps> = () => {
 
   return (
     <div>
+      <SearchCustomer />
       <div className='customer-page-detail'>
         <div className='customer-page-detail__title-wrapper'>
           <h1 className='customer-page-detail__title'>Customers From {label}</h1>
         </div>
+        <div className='customer-page-cards'>
+          <div className='card'>
+            <h2>Total</h2>
+            <p>
+              <FontAwesomeIcon icon={faUser} className='card-icon' />
+              {pageInfo?.total}
+            </p>
+          </div>
+        </div>
         <div className='sort'>
-          <label htmlFor=''>Sort</label>
-          <select onChange={(e) => setSort(e.target.value)}>
-            <option value='date' defaultChecked>
-              Date
-            </option>
-            <option value='name'>Name</option>
-          </select>
+          <div className='sort-block'>
+            <label htmlFor=''>
+              <FontAwesomeIcon icon={faFilter} />
+            </label>
+            <select onChange={(e) => setSort(e.target.value)}>
+              <option value='date' defaultChecked>
+                Register date
+              </option>
+              <option value='name'>Username</option>
+            </select>
+          </div>
 
-          <label htmlFor=''>Order</label>
-          <select onChange={(e) => setBy(e.target.value)}>
-            <option value='desc' defaultChecked>
-              Desc
-            </option>
-            <option value='insc'>Insc</option>
-          </select>
+          <div className='sort-block'>
+            <label htmlFor=''>
+              <FontAwesomeIcon icon={faSort} />
+            </label>
+            <select onChange={(e) => setBy(e.target.value)}>
+              <option value='desc' defaultChecked>
+                Desc
+              </option>
+              <option value='insc'>Insc</option>
+            </select>
+          </div>
 
-          <button onClick={sortCustomers}>Submit</button>
+          <button onClick={sortCustomers}>Sort</button>
         </div>
         {pageInfo?.data && (
           <div>
             <CustomerTable data={pageInfo.data} head={['Name', 'Age', 'Registered', 'Email']} body={['username', 'age', 'dateRegistered', 'email']} />
             <div className='pagination'>
-              {pageInfo.pre_page && <button onClick={() => changePage(pageInfo.page - 1)}>Previous</button>}
+              {pageInfo.pre_page && (
+                <button onClick={() => changePage(pageInfo.page - 1)} className='prev-button'>
+                  Previous
+                </button>
+              )}
               {pages.length > 1 &&
                 pages.map((page) => {
                   return (
@@ -121,7 +146,11 @@ const CustomersByNat: React.FC<CustomerByNatProps> = () => {
                     </button>
                   );
                 })}
-              {pageInfo.next_page && <button onClick={() => changePage(pageInfo.page + 1)}>Next</button>}
+              {pageInfo.next_page && (
+                <button onClick={() => changePage(pageInfo.page + 1)} className='next-button'>
+                  Next
+                </button>
+              )}
             </div>
           </div>
         )}

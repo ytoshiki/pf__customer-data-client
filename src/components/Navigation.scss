@@ -1,19 +1,72 @@
 .navigation {
   display: flex;
-  position: fixed;
+  flex-direction: column;
   z-index: 999;
   justify-content: flex-start;
-  left: 0;
-  top: 0;
 
-  background: var(--color-white-deep);
-
-  min-height: 100vh;
+  color: rgba($color: #fff, $alpha: 0.8);
+  background: var(--bg-color);
+  height: 100%;
+  min-width: 48px;
   overflow: hidden;
-  width: 7rem;
+
+  &.hide {
+    width: 1rem;
+  }
 
   &__mode {
     display: flex;
+  }
+
+  &__option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    opacity: 1;
+    font-size: 1.2rem;
+    padding: 0.75rem;
+    cursor: pointer;
+    color: rgb(54, 54, 54);
+    background: var(--color-white);
+  }
+
+  &__admin {
+    width: 100%;
+
+    min-height: 4rem;
+    background: var(--color-purple);
+    padding: 0.23rem 0.5rem;
+    display: flex;
+
+    align-items: center;
+
+    &-inner {
+      display: flex;
+      flex-direction: column;
+
+      .icon {
+        font-size: 1.2rem;
+        margin-right: auto;
+        margin-left: 0.5rem !important;
+        margin-top: 0.3rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .sub-icon {
+        margin-left: 0.1rem;
+        font-size: 0.9rem;
+      }
+
+      p {
+        display: block;
+        margin-left: 0.5rem;
+        font-size: 0.8rem;
+      }
+
+      span {
+        color: #fff;
+      }
+    }
   }
 
   &__svg {
@@ -25,6 +78,7 @@
   }
 
   &__list {
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
   }
@@ -32,16 +86,19 @@
   &__menu {
     display: flex;
     flex-direction: column;
+    margin-top: 0.75rem;
 
     &-item {
+      padding-left: 2rem;
+      &:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
     }
 
     &-link {
-      display: flex;
-      flex-direction: column;
-
       small {
-        font-size: 1rem;
+        display: inline-block;
+        font-size: 1.1rem;
       }
     }
 
@@ -69,6 +126,15 @@
   .label {
     font-weight: bold;
     font-size: 1.1rem;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+
+    span {
+      display: inline-block;
+      margin: 0 1rem;
+    }
   }
 
   /* The switch - the box around the slider */
@@ -111,6 +177,14 @@
     transition: 0.4s;
   }
 
+  .hidden {
+    display: none;
+  }
+
+  .visible {
+    display: block;
+  }
+
   input:checked + .slider {
     background-color: black;
   }
@@ -132,6 +206,12 @@
 
   .slider.round:before {
     border-radius: 50%;
+  }
+
+  .icon {
+    margin-left: auto;
+
+    display: block;
   }
 }
 

@@ -77,7 +77,7 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
       <Header category='customer' />
       <div className='customerpage'>
         <div className='customer-cards'>
-          <Link to={newlyRegistered ? '/customers/newlyRegistered' : '/'}>
+          <Link to={newlyRegistered ? '/customers/newlyRegistered' : '/'} className={newlyRegistered ? '' : 'is-non-link'}>
             <div className='customer-card'>
               Newly Registered Customers
               <span className='data'>{newlyRegistered}+</span>
@@ -91,7 +91,7 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
             </div>
           </Link>
 
-          <Link to='/'>
+          <Link to='/' className='is-non-link'>
             <div className='customer-card'>
               Customer Increase In a year <span className='data'>{percentage}%</span>
             </div>
@@ -99,7 +99,7 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
 
           {/* {satisfaction && ( */}
 
-          <Link to='/'>
+          <Link to='/' className='is-non-link'>
             <div className='customer-card'>
               Over All Satisfactions <span className='data'>{satisfaction}%</span>
             </div>

@@ -23,6 +23,10 @@
       }
     }
 
+    .is-non-link {
+      background: var(--color-white);
+    }
+
     &__card {
       display: flex;
       align-items: center;

@@ -13,11 +13,12 @@ body {
   background: var(--color-white);
   color: var(--color-dark-deep);
   font-family: 'Poppins', sans-serif;
+  position: relative;
+  min-height: 100vh;
 }
 
 #root {
-  padding-left: 9rem;
-  padding-top: 3rem;
+  padding-left: 3rem;
 }
 
 .logo {
@@ -25,8 +26,14 @@ body {
   font-size: 1.5rem;
 }
 
-.mg-30-bottom {
-  margin-bottom: 3rem;
+.card-icon {
+  margin-right: 0.75rem;
+  font-size: 1.7rem;
+
+  &-md {
+    font-size: 2.3rem;
+    margin-right: 1rem;
+  }
 }
 
 a,
@@ -45,6 +52,7 @@ a:visited {
   --color-white-deep: #fff;
   --color-gb-dark: #373737;
   --color-gb-dark01: #2e2e2e;
+  --bg-color: #2c2a33;
 
   --color-bg-blue: rgb(83, 136, 206);
   // graph color pallete
@@ -61,5 +69,5 @@ a:visited {
 
   --color-border: rgb(219, 216, 216);
 
-  --border-radius: 20px;
+  --border-radius: 5px;
 }

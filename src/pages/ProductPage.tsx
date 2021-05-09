@@ -116,28 +116,28 @@ const ProductPage: React.FC<ProductPageProps> = ({ products, fetchProducts, newl
       <Header category='Product' />
       {products.length && (
         <div className='product-cards'>
-          <Link to={newlyAdded ? '/products/new' : '/products'}>
+          <Link to={newlyAdded ? '/products/new' : '/products'} className={newlyAdded ? '' : 'is-non-link'}>
             <div className='product-cards__card'>
               <h3>Newly Added Products</h3>
               <span className='data'>{newlyAdded}+</span>
             </div>
           </Link>
 
-          <Link to={products.length ? '/products/all' : '/products'}>
+          <Link to={products.length ? '/products/all' : '/products'} className={products.length ? '' : 'is-non-link'}>
             <div className='product-cards__card'>
               <h3>Total Amount of Products</h3>
               <span className='data'>{products.length}</span>
             </div>
           </Link>
 
-          <Link to={reviews.length ? '/reviews/all' : '/products'}>
+          <Link to={reviews.length ? '/reviews/all' : '/products'} className={reviews.length ? '' : 'is-non-link'}>
             <div className='product-cards__card'>
               <h3>Total Amount of Reviews</h3>
               <span className='data'>{reviews.length}</span>
             </div>
           </Link>
 
-          <Link to={reviews.length ? '/reviews/all' : '/products'}>
+          <Link to={reviews.length ? '/reviews/all' : '/products'} className={reviews.length ? '' : 'is-non-link'}>
             <div className='product-cards__card'>
               <h3>Over All Rating</h3>
               <span className='data'>{overallRating}/5.0</span>
