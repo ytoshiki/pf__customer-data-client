@@ -44,9 +44,9 @@ const ReviewById: React.FC<ReviewByIdProps> = () => {
   return (
     <div>
       <div className='review-page-detail'>
-        <div className='review-page-detail__title-wrapper'>
+        {/* <div className='review-page-detail__title-wrapper'>
           <h1 className='review-page-detail__title'>All Reviews</h1>
-        </div>
+        </div> */}
         <div>
           {review && (
             <div className='rating'>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { fetchAdmin } from '../../../redux';
+import '../LoginPage.scss';
 
 import { AuthError, AuthInfo } from '../signup/Signup';
 
@@ -86,17 +87,17 @@ const Login: React.FC<LoginProps> = ({ fetchAdmin }) => {
   };
 
   return (
-    <div>
-      <div>
+    <div className='loginPage__form'>
+      <div className='loginPage__form-inner'>
         <h1>Login</h1>
         {errors.req && errors.req}
         <form action='' onSubmit={submitForm}>
-          <div>
+          <div className='loginPage__form-block'>
             <label htmlFor=''>Name</label>
             <input type='text' value={form?.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
           </div>
           {errors?.name}
-          <div>
+          <div className='loginPage__form-block'>
             <label htmlFor=''>Password</label>
             <input type='password' value={form?.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           </div>

@@ -146,14 +146,12 @@ const Navigation: React.FC<NavigationProps> = ({ admin }) => {
             </li>
             <li className={`${navClass.add ? 'visible' : 'hidden'} target`} data-tag='add'>
               <ul className='navigation__menu'>
-                <li className='navigation__menu-item'>
+                {/* <li className='navigation__menu-item'>
                   <Link to='/register' className='navigation__menu-link'>
-                    {/* <div>
-                  <img src={ProductLogo} alt='' />
-                </div> */}
+                   
                     <small>Admin</small>
                   </Link>
-                </li>
+                </li> */}
                 <li className='navigation__menu-item'>
                   <Link to='/add/category' className='navigation__menu-link'>
                     {/* <div>

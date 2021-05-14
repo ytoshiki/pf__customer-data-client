@@ -1,19 +1,16 @@
-.searchCustomer {
+.filter-edit {
   width: 100%;
-  margin: auto;
-  background: var(--color-white-deep);
 
-  form {
+  &__inner {
     display: flex;
-    width: 30rem;
-    margin: auto;
-    padding: 1rem 0;
+    justify-content: space-between;
+    padding: 1rem 2rem;
   }
 
   &__search {
-    width: 100%;
+    min-width: 30rem;
     position: relative;
-    height: 2rem;
+    height: 2.3rem;
   }
 
   &__icon {
@@ -22,6 +19,7 @@
     right: 0.9rem;
     opacity: 0.7;
     transform: translateY(-50%);
+    color: grey;
   }
 
   input {
@@ -46,11 +44,5 @@
     background: none;
     padding: 0 1rem;
     border: 1px solid rgba($color: #111, $alpha: 0.3);
-  }
-
-  &__error {
-    display: inline-block;
-    color: #ff3333;
-    padding: 0.3rem 2rem;
   }
 }

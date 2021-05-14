@@ -5,6 +5,7 @@ import { ProductData } from '../../pages/customer/CustomerById';
 import { addProduct, fetchAllCategories, StoreTypes } from '../../redux';
 import { Category } from '../../redux/reducers/category/categoryReducer';
 import ProductModal from '../modal/ProductModal';
+import './AddForm.scss';
 
 export interface ProductFormProps {
   categories: Category[];
@@ -93,13 +94,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
     }
 
     if (!Number(form.price)) {
-      tempoErrors.price = 'price must be number';
+      tempoErrors.price = 'Price must be number';
 
       if (result) result = false;
     }
 
     if (form.images.img1 === '' && form.images.img2 === '') {
-      tempoErrors.image = 'at least one image is required';
+      tempoErrors.image = 'At least one image is required';
 
       if (result) result = false;
     }
@@ -119,29 +120,30 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
   };
 
   return (
-    <>
+    <div className='addForm'>
       {successMessage && successMessage}
-      {error.request && error.request}
+      <span className='addForm__error'>{error.request && error.request}</span>
       <ProductModal isOpen={openModal} setIsOpen={setOpenModal} data={form} comfirm={addProduct} />
-      <form onSubmit={onSubmit}>
-        <div>
-          <label htmlFor=''>name</label>
+      <h1>Add a New Product</h1>
+      <form onSubmit={onSubmit} className='addForm__form'>
+        <div className='addForm__block'>
+          <label htmlFor=''>*name</label>
           <input type='text' onChange={(e) => setForm({ ...form, name: e.target.value })} value={form.name} />
-          {error.name && error.name}
+          <span className='addForm__error'>{error.name && error.name}</span>
         </div>
-        <div>
-          <label htmlFor=''>price</label>
+        <div className='addForm__block'>
+          <label htmlFor=''>*price</label>
           <input type='text' onChange={(e) => setForm({ ...form, price: e.target.value })} value={form.price} />
-          {error.price && error.price}
+          <span className='addForm__error'>{error.price && error.price}</span>
         </div>
-        <div>
-          <label htmlFor=''>images</label>
-          <small>Up to 2 urls</small>
+        <div className='addForm__block'>
+          <label htmlFor=''>*images</label>
+          <small className='addForm__option'>Up to 2 urls</small>
           <input type='text' onChange={(e) => setForm({ ...form, images: { ...form.images, img1: e.target.value } })} value={form.images.img1} />
           <input type='text' onChange={(e) => setForm({ ...form, images: { ...form.images, img2: e.target.value } })} value={form.images.img2} />
-          {error.image && error.image}
+          <span className='addForm__error'>{error.image && error.image}</span>
         </div>
-        <div>
+        <div className='addForm__block'>
           <label htmlFor=''>Category</label>
           {categories.length && (
             <select
@@ -163,11 +165,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
               })}
             </select>
           )}
-          {error.category && error.category}
+          <span className='addForm__error'>{error.category && error.category}</span>
         </div>
-        <button>Submit</button>
+        <button className='addForm__button'>Preview</button>
       </form>
-    </>
+    </div>
   );
 };
 

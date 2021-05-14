@@ -5,6 +5,7 @@ import { fetchAdmin, StoreTypes } from '../../redux';
 import { Admin } from '../../redux/reducers/admin/adminReducer';
 import Login from './login/Login';
 import Signup from './signup/Signup';
+import './LoginPage.scss';
 
 export interface LoginPageProps {
   admin?: Admin;
@@ -38,21 +39,23 @@ const LoginPage: React.FC<LoginPageProps> = ({ admin, fetchAdmin }) => {
       {admin?.name && admin.token ? (
         <Redirect to='/' />
       ) : (
-        <div>
-          {login ? <Login /> : <Signup />}
-          <small>
-            {login ? (
-              <>
-                <span>I don't have an accout yet.</span>
-                <button onClick={() => setLogin(!login)}>Create a new account</button>
-              </>
-            ) : (
-              <>
-                <span>I already have an account.</span>
-                <button onClick={() => setLogin(!login)}>Sign In</button>
-              </>
-            )}
-          </small>
+        <div className='loginPage'>
+          <div className='loginPage__inner'>
+            {login ? <Login /> : <Signup />}
+            <small className='loginPage__toggle'>
+              {login ? (
+                <>
+                  <span>I don't have an accout yet.</span>
+                  <button onClick={() => setLogin(!login)}>Create a new account</button>
+                </>
+              ) : (
+                <>
+                  <span>I already have an account.</span>
+                  <button onClick={() => setLogin(!login)}>Sign In</button>
+                </>
+              )}
+            </small>
+          </div>
         </div>
       )}
     </>

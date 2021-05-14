@@ -1,3 +1,5 @@
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -106,13 +108,13 @@ const ProductTable: React.SFC<ProductTableProps> = ({ data, head, body, hover, l
                 } else if (td === 'update') {
                   return (
                     <td key={generateKey(String(index))} onClick={() => updateProduct(obj)}>
-                      Update
+                      <FontAwesomeIcon icon={faEdit} color='grey' />
                     </td>
                   );
                 } else if (td === 'delete') {
                   return (
                     <td key={generateKey(String(index))} onClick={() => deleteProduct(obj._id || obj.id)}>
-                      Delete
+                      <FontAwesomeIcon icon={faTrash} color='#d11a2a' />
                     </td>
                   );
                 } else {

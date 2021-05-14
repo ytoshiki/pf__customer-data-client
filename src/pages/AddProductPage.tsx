@@ -6,7 +6,9 @@ export interface AddProductProps {}
 const AddProduct: React.FC<AddProductProps> = () => {
   return (
     <div className='addProduct'>
-      <ProductForm />
+      <div className='addProduct__inner'>
+        <ProductForm />
+      </div>
     </div>
   );
 };

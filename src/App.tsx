@@ -119,9 +119,7 @@ const App: React.FC<AppProps> = ({ customers, fetchCustomers, loading, admin, fe
             <Route path='/add/category'>
               <AddCategoryPaeg />
             </Route>
-            <Route path='/register'>
-              <AddAdmin />
-            </Route>
+
             <Route path='/edit/product'>
               <EditProductPage />
             </Route>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addCategory } from '../../redux';
+import './AddForm.scss';
 
 export interface CategoryFormProps {
   addCategory: any;
@@ -71,34 +72,35 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ addCategory }) => {
   };
 
   return (
-    <div>
+    <div className='addForm'>
       {successMessage && (
         <p>
           {successMessage} <Link to='/category/edit'>Edit Category</Link>
         </p>
       )}
       {errors.request && errors.request}
-      <form onSubmit={onSubmit}>
-        <div>
-          <label htmlFor=''>name</label>
+      <h1>Add a New Category</h1>
+      <form onSubmit={onSubmit} className='addForm__form'>
+        <div className='addForm__block'>
+          <label htmlFor=''>*name</label>
           <input type='text' onChange={(e) => setForm({ ...form, name: e.target.value })} />
-          {errors.name && errors.name}
+          <span className='addForm__error'>{errors.name && errors.name}</span>
         </div>
-        <div>
-          <label htmlFor=''>image</label>
+        <div className='addForm__block'>
+          <label htmlFor=''>*image</label>
           <input type='text' onChange={(e) => setForm({ ...form, image: e.target.value })} />
-          {errors.image && errors.image}
+          <span className='addForm__error'>{errors.image && errors.image}</span>
         </div>
-        <div>
-          <label htmlFor=''>heading</label>
+        <div className='addForm__block'>
+          <label htmlFor=''>*heading</label>
           <input type='text' onChange={(e) => setForm({ ...form, heading: e.target.value })} />
-          {errors.heading && errors.heading}
+          <span className='addForm__error'>{errors.heading && errors.heading}</span>
         </div>
-        <div>
+        <div className='addForm__block'>
           <label htmlFor=''>paragraph</label>
           <input type='text' onChange={(e) => setForm({ ...form, paragraph: e.target.value })} />
         </div>
-        <button>Submit</button>
+        <button className='addForm__button'>Preview</button>
       </form>
     </div>
   );

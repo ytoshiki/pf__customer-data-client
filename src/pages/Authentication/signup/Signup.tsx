@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import '../LoginPage.scss';
 
 export interface SignupProps {
   setSuccess?: any;
@@ -89,17 +90,17 @@ const Signup: React.FC<SignupProps> = ({ setSuccess }) => {
   };
 
   return (
-    <div>
-      <div>
+    <div className='loginPage__form'>
+      <div className='loginPage__form-inner'>
         <h1>Signup</h1>
         {errors.req && errors.req}
         <form action='' onSubmit={submitForm}>
-          <div>
+          <div className='loginPage__form-block'>
             <label htmlFor=''>Name</label>
             <input type='text' value={form?.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
           </div>
           {errors?.name}
-          <div>
+          <div className='loginPage__form-block'>
             <label htmlFor=''>Password</label>
             <input type='password' value={form?.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           </div>

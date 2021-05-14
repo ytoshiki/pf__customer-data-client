@@ -9,11 +9,12 @@
   background: var(--color-white-deep);
 
   .image-wrapper {
-    max-width: 4rem;
+    min-width: 3rem;
+    max-width: 6rem;
     height: 100%;
-
     img {
       width: 100%;
+      height: 100%;
     }
   }
 

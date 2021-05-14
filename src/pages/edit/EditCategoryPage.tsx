@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import FilterCategory from '../../components/filter/FilterCategory';
 import CategoryTable from '../../components/table/CategoryTable';
 import ProductTable from '../../components/table/ProductTable';
 import { fetchAllCategories, StoreTypes } from '../../redux';
@@ -19,7 +20,12 @@ const EditCategory: React.FC<EditCategoryProps> = ({ categories, fetchCategories
     fetchCategories();
   }, [categories, fetchCategories]);
 
-  return <div>{categories.length > 0 && <CategoryTable data={categories} head={['name', 'image', 'heading', 'paragraph']} body={['name', 'image', 'heading', 'paragraph', 'update', 'delete']} />}</div>;
+  return (
+    <>
+      <FilterCategory />
+      <div className='edit-product'>{categories.length > 0 && <CategoryTable data={categories} head={['name', 'image', 'heading', 'paragraph']} body={['name', 'image', 'heading', 'paragraph', 'update', 'delete']} />}</div>
+    </>
+  );
 };
 
 const mapStateToProps = (store: StoreTypes) => {

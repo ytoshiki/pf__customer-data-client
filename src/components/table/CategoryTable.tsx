@@ -8,6 +8,8 @@ import CategoryUpdateModal from '../modal/CategoryUpdateModal';
 import { useState } from 'react';
 import { CategoryFormData } from '../form/CategoryForm';
 import { Category } from '../../redux/reducers/category/categoryReducer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 export interface CategoryTableProps {
   data: any[];
@@ -84,15 +86,17 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ data, head, body, deleteC
                 } else if (td === 'update') {
                   return (
                     <td key={generateKey(String(index))} onClick={() => updateCategory(obj)}>
-                      Update
+                      <FontAwesomeIcon icon={faEdit} color='grey' />
                     </td>
                   );
                 } else if (td === 'delete') {
                   return (
                     <td key={generateKey(String(index))} onClick={() => deleteTheCategory(obj.id)}>
-                      Delete
+                      <FontAwesomeIcon icon={faTrash} color='#d11a2a' />
                     </td>
                   );
+                } else if (td === 'paragraph' && !obj.paragraph) {
+                  return <td key={generateKey(String(index))}>None</td>;
                 } else {
                   return <td key={generateKey(String(index))}>{obj[td]}</td>;
                 }

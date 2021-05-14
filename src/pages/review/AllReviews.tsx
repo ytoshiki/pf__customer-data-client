@@ -16,12 +16,14 @@ export interface ReviewData {
         _id: string;
       }
     | string;
+  customer_id?: string;
   product:
     | {
         name: string;
         _id: string;
       }
     | string;
+  product_id?: string;
   rating: number;
   _id: string;
 }
@@ -53,7 +55,9 @@ const AllReviews: React.SFC<AllReviewsProps> = () => {
           comment: review.comment,
           createdAt: review.createdAt,
           customer: (review.customer as any).username,
+          customer_id: (review.customer as any)._id,
           product: (review.product as any).name,
+          product_id: (review.product as any)._id,
           rating: review.rating,
           _id: review._id
         };
