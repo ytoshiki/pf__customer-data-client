@@ -3,28 +3,64 @@
   margin: auto;
   padding: 2rem 1rem;
 
-  &__title {
-    font-weight: 500;
+  &__inner {
+    max-width: 60rem;
+    margin: auto;
+  }
 
-    &-wrapper {
-      min-height: 4rem;
+  &__customer {
+    &-info {
       display: flex;
       align-items: center;
-      justify-content: center;
+    }
+
+    &-img {
+      width: 3rem;
+      height: 3rem;
+      overflow: hidden;
+      border-radius: 50%;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &-name {
+      margin-left: 1rem;
+    }
+
+    &-review {
+      margin-top: 1rem;
+    }
+
+    &-date {
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    &-comment {
+      font-size: 1.3rem;
+      line-height: 1.5;
+      max-width: 40rem;
     }
   }
 
-  .rating {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
+  &__product {
+    border-left: 1px solid rgba($color: #111, $alpha: 0.4);
+    padding-left: 3rem;
     margin-top: 2rem;
+    &-inner {
+    }
 
-    .number {
-      font-size: 3rem;
-      font-weight: bold;
+    &-img {
+      max-width: 5rem;
+      img {
+        width: 100%;
+      }
+    }
+
+    &-name {
+      text-decoration: underline;
     }
   }
 }

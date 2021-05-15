@@ -1,18 +1,23 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { PageData } from './AllCustomers';
-import logo from '../../images/avator.png';
 import { useParams } from 'react-router';
 import CustomerTable from '../../components/table/CustomerTable';
 import SearchCustomer from '../../components/search/SearchCustomer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSort, faUser } from '@fortawesome/free-solid-svg-icons';
+import CircularBar from '../../components/graph/Circular';
+import { connect } from 'react-redux';
+import { StoreTypes } from '../../redux';
+import { CustomerData } from './newlyRegistered';
 
-export interface CustomerByGenderProps {}
+export interface CustomerByGenderProps {
+  customers: any[];
+}
 
 // /gender/:gender/:page/:sort/:by
 
-const CustomersByGender: React.FC<CustomerByGenderProps> = (props) => {
+const CustomersByGender: React.FC<CustomerByGenderProps> = ({ customers }) => {
   const params = useParams();
   const gender: string = (params as any).gender;
 
@@ -20,6 +25,7 @@ const CustomersByGender: React.FC<CustomerByGenderProps> = (props) => {
   const [by, setBy] = useState('desc');
 
   const [pageInfo, setPageInfo] = useState<PageData>();
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     if (pageInfo) {
@@ -36,12 +42,13 @@ const CustomersByGender: React.FC<CustomerByGenderProps> = (props) => {
       }
 
       setPageInfo(data);
+      setPercent(Math.round(((data.total as number) / customers.length) * 100));
     };
 
     if (!pageInfo) {
       fetchCustomers();
     }
-  }, [pageInfo, setPageInfo, gender]);
+  }, [pageInfo, setPageInfo, gender, setPercent, customers]);
 
   let pages: number[] = [];
 
@@ -105,6 +112,11 @@ const CustomersByGender: React.FC<CustomerByGenderProps> = (props) => {
               {pageInfo?.total}
             </p>
           </div>
+          <div className='card is-bar'>
+            <div className='customer-page-cards__bar'>
+              <CircularBar percentage={percent} color='102, 201, 102' />
+            </div>
+          </div>
         </div>
 
         <div className='sort'>
@@ -136,7 +148,7 @@ const CustomersByGender: React.FC<CustomerByGenderProps> = (props) => {
         </div>
         {pageInfo?.data && (
           <div>
-            <CustomerTable data={pageInfo.data} head={['Name', 'Age', 'Registered', 'Email']} body={['username', 'age', 'dateRegistered', 'email']} />
+            <CustomerTable data={pageInfo.data} head={['User', 'Age', 'gender', 'Nat', 'Email', 'Registered']} body={['username', 'age', 'gender', 'nat', 'email', 'dateRegistered']} />
             <div className='pagination'>
               {pageInfo.pre_page && (
                 <button onClick={() => changePage(pageInfo.page - 1)} className='prev-button'>
@@ -164,4 +176,10 @@ const CustomersByGender: React.FC<CustomerByGenderProps> = (props) => {
   );
 };
 
-export default CustomersByGender;
+const mapStateToProps = (store: StoreTypes) => {
+  return {
+    customers: store.customers.customers
+  };
+};
+
+export default connect(mapStateToProps)(CustomersByGender);

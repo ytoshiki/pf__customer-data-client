@@ -12,15 +12,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 3rem;
     }
   }
 
   .customer-page-cards {
     display: flex;
+    background: rgba($color: #fff, $alpha: 0.3);
 
     .card {
-      padding: 0 3rem;
-      background: var(--color-white-deep);
+      padding: 2rem 3rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,14 +30,22 @@
       border-radius: var(--border-radius);
 
       h2 {
-        font-weight: 300;
-        font-size: 1.2rem;
+        font-weight: 500;
+        font-size: 1.4rem;
       }
 
       p {
-        font-size: 2rem;
+        font-size: 3.6rem;
         font-weight: bold;
       }
+
+      &.is-bar {
+        background: none;
+      }
+    }
+
+    &__bar {
+      width: 12rem;
     }
   }
 
@@ -152,7 +161,6 @@
     &__profile {
       background: var(--color-dark-middle);
 
-      border-radius: 10px;
       color: rgb(243, 241, 241);
       width: 100%;
       display: flex;
@@ -166,7 +174,7 @@
       }
 
       .img-wrapper {
-        max-width: 10rem;
+        min-width: 8rem;
         border-radius: 50%;
         overflow: hidden;
         display: flex;
@@ -180,14 +188,25 @@
 
       .detail {
         margin-left: 3rem;
+
+        &__sub {
+          margin-top: 1.3rem;
+          opacity: 0.8;
+        }
+
         .name {
           font-weight: bold;
           font-size: 1.7rem;
-          margin: 0.75rem 0 0rem 0;
+          margin: 0.75rem 0 0 0;
         }
 
         .email {
           font-size: 1rem;
+        }
+
+        span {
+          display: inline-block;
+          min-width: 6.6rem;
         }
       }
     }
@@ -245,8 +264,16 @@
         }
       }
 
+      .is-review {
+        position: absolute;
+        top: 50%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+      }
+
       .pointer {
         cursor: pointer;
+        position: relative;
       }
 
       .image-wrapper {

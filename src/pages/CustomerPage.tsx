@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import BarGraph from '../components/graph/BarGraph';
+import CircularBar from '../components/graph/Circular';
 import MembershipGraph from '../components/graph/MembershipGraph';
 import PieGraph from '../components/graph/PieGraph';
 import RankingGraph from '../components/graph/RankingGraph';
@@ -45,7 +46,7 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
         return;
       }
 
-      setRankingData(data.customers);
+      setRankingData(data.customers.slice(0, 5));
     };
 
     fetchRankingData();
@@ -93,7 +94,10 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
 
           <Link to='/' className='is-non-link'>
             <div className='customer-card'>
-              Customer Increase In a year <span className='data'>{percentage}%</span>
+              Customer Increase In a year
+              <div className='customer-card__bar'>
+                <CircularBar percentage={percentage as number} color='102, 201, 102' />
+              </div>
             </div>
           </Link>
 
@@ -101,7 +105,10 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
 
           <Link to='/' className='is-non-link'>
             <div className='customer-card'>
-              Over All Satisfactions <span className='data'>{satisfaction}%</span>
+              Over All Satisfactions
+              <div className='customer-card__bar'>
+                <CircularBar percentage={satisfaction as number} color='102, 201, 102' />
+              </div>
             </div>
           </Link>
 
@@ -121,7 +128,7 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
         </div>
         <div className='customerpage__right'>
           <BarGraph label='Nationality' data={nationalityData} x='country' y='number' />
-          {rankingData && <RankingGraph data={rankingData} x='username' y='totalPurchases' label='Top Customers By Purchases' others={null} />}
+          {rankingData.length && <RankingGraph data={rankingData} x='username' y='totalPurchases' label='Top Customers By Purchases' others={null} />}
         </div>
       </div>
     </>

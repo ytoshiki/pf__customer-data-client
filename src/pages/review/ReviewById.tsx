@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 import Rating from 'react-rating';
 
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import ReviewTable from '../../components/table/ReviewTable';
+import { dateFormatter } from '../../helpers';
 import { ReviewData } from './AllReviews';
 
 export interface ReviewByIdProps {}
@@ -44,19 +46,35 @@ const ReviewById: React.FC<ReviewByIdProps> = () => {
   return (
     <div>
       <div className='review-page-detail'>
-        {/* <div className='review-page-detail__title-wrapper'>
-          <h1 className='review-page-detail__title'>All Reviews</h1>
-        </div> */}
-        <div>
-          {review && (
-            <div className='rating'>
-              <h3>Rating</h3>
-              <p className='number'>{String(review.rating).split('.').length > 1 ? review.rating : review.rating + '.0'}</p>
-              <Rating initialRating={review.rating} emptySymbol={<FontAwesomeIcon icon={faStar} color='grey' />} fullSymbol={<FontAwesomeIcon icon={faStar} color='#FDCC0D' />} readonly />
+        {review && (
+          <div className='review-page-detail__inner'>
+            <div className='review-page-detail__customer'>
+              <div className='review-page-detail__customer-info'>
+                <div className='review-page-detail__customer-img'>
+                  <img src={(review.customer as any).avator} alt='' />
+                </div>
+                <p className='review-page-detail__customer-name'>{(review.customer as any).username}</p>
+              </div>
+              <div className='review-page-detail__customer-review'>
+                <div>
+                  <Rating initialRating={review.rating} emptySymbol={<FontAwesomeIcon icon={faStar} color='grey' />} fullSymbol={<FontAwesomeIcon icon={faStar} color='#FDCC0D' />} readonly />
+                </div>
+                <p className='review-page-detail__customer-date'>Reviewed on {dateFormatter(review.createdAt as any)}</p>
+                <p className='review-page-detail__customer-comment'>{review.comment}</p>
+              </div>
             </div>
-          )}
-        </div>
-        {review && <ReviewTable data={[review]} head={['comment', 'reviewed on', 'reviewed by', 'date']} body={['comment', 'product', 'customer', 'createdAt']} />}
+            <div className='review-page-detail__product'>
+              <div className='review-page-detail__product-inner'>
+                <div className='review-page-detail__product-img'>
+                  <img src={(review.product as any).images[0]} alt='' />
+                </div>
+                <div className='review-page-detail__product-name'>
+                  <Link to={`/products/${(review.product as any)._id}`}>{(review.product as any).name}</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

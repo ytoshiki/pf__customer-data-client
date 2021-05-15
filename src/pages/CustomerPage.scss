@@ -34,12 +34,17 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-
       justify-content: center;
       color: rgba(var(--color-dark-deep), 0.7);
 
       &:not(:last-child) {
         margin-right: 26.6px;
+      }
+
+      &__bar {
+        max-width: 11rem;
+        min-width: 9rem;
+        margin-top: 1rem;
       }
     }
 

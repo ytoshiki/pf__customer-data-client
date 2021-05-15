@@ -40,7 +40,7 @@ const AllProducts: React.SFC<AllProductsProps> = () => {
         <div className='product-page-detail__title-wrapper'>
           <h1 className='product-page-detail__title'>All Products</h1>
         </div>
-        {products && <ProductTable data={products} head={['id', '', 'title', 'price($)', 'category', 'added']} body={['_id', 'images', 'name', 'price', 'category', 'createdAt']} hover={true} link={true} />}
+        {products && <ProductTable data={products} head={['product', '', 'price($)', 'category', 'added']} body={['images', 'name', 'price', 'category', 'createdAt']} hover={true} link={true} />}
       </div>
     </div>
   );

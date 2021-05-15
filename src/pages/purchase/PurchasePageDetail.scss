@@ -11,16 +11,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 3rem;
     }
   }
 
   .cards {
     display: flex;
     margin-bottom: 2rem;
+    background: rgba($color: #fff, $alpha: 0.4);
 
     .card {
-      padding: 0 3rem;
-      background: var(--color-white-deep);
+      padding: 2rem 3rem;
       display: flex;
       align-items: center;
       justify-content: center;

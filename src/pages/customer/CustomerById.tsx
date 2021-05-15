@@ -6,7 +6,7 @@ import logo from '../../images/avator.png';
 import { ReviewData } from '../review/AllReviews';
 import { CustomerData } from './newlyRegistered';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faPen, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 export interface ProductData {
@@ -122,7 +122,11 @@ const CustomerById: React.FC<CustomerByIdProps> = () => {
     if (reviews) {
       reviews.forEach((review) => {
         if ((review.product as any)._id === product_id) {
-          (result as any) = <div onClick={() => onClick(review._id)}>View</div>;
+          (result as any) = (
+            <div onClick={() => onClick(review._id)} className='is-review'>
+              <FontAwesomeIcon icon={faEye} />
+            </div>
+          );
           return result;
         }
       });
@@ -130,7 +134,6 @@ const CustomerById: React.FC<CustomerByIdProps> = () => {
 
     return result;
   };
-  console.log(purchases);
 
   return (
     <div>
@@ -147,8 +150,21 @@ const CustomerById: React.FC<CustomerByIdProps> = () => {
                   <img src={customer.avator ? customer.avator : logo} alt='' />
                 </div>
                 <div className='detail'>
-                  <p className='name'>{customer.username}</p>
-                  <div className='email'>{customer.email}</div>
+                  <p className='name'> {customer.username}</p>
+                  <div className='detail__sub'>
+                    <div className='email'>
+                      <span>Id</span>: {customer._id}
+                    </div>
+                    <div className='email'>
+                      <span>Email</span>: {customer.email}
+                    </div>
+                    <div className='nat'>
+                      <span>Nationality</span>: {customer.nat}
+                    </div>
+                    <div className='date'>
+                      <span>Registered:</span>: {dateFormatter(customer.dateRegistered as any)}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

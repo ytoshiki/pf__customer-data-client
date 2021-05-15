@@ -28,6 +28,15 @@ const ProfitTop: React.SFC<ProfitTopProps> = () => {
         return;
       }
 
+      data.data.map((obj: { date: string; profit: number }) => {
+        if (obj.profit !== 0) {
+          obj.profit = Math.floor(obj.profit * Math.pow(10, 2)) / Math.pow(10, 2);
+          return obj;
+        }
+
+        return obj;
+      });
+
       setSalesData(data.data);
     };
 

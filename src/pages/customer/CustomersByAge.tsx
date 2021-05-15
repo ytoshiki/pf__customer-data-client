@@ -1,17 +1,20 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { PageData } from './AllCustomers';
-import logo from '../../images/avator.png';
 import { useParams } from 'react-router';
-import { customerReducer } from '../../redux/reducers/customer/customerReducer';
 import CustomerTable from '../../components/table/CustomerTable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSort, faUser } from '@fortawesome/free-solid-svg-icons';
 import SearchCustomer from '../../components/search/SearchCustomer';
+import { connect } from 'react-redux';
+import { StoreTypes } from '../../redux';
+import CircularBar from '../../components/graph/Circular';
 
-export interface CustomerByAgeProps {}
+export interface CustomerByAgeProps {
+  customers: any[];
+}
 
-const CustomersByAge: React.FC<CustomerByAgeProps> = (props) => {
+const CustomersByAge: React.FC<CustomerByAgeProps> = ({ customers }) => {
   const params = useParams();
   const age: string = (params as any).age;
 
@@ -19,6 +22,7 @@ const CustomersByAge: React.FC<CustomerByAgeProps> = (props) => {
   const [by, setBy] = useState('desc');
 
   const [pageInfo, setPageInfo] = useState<PageData>();
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     if (pageInfo) {
@@ -35,12 +39,13 @@ const CustomersByAge: React.FC<CustomerByAgeProps> = (props) => {
       }
 
       setPageInfo(data);
+      setPercent(Math.round(((data.total as number) / customers.length) * 100));
     };
 
     if (!pageInfo) {
       fetchCustomers();
     }
-  }, [pageInfo, setPageInfo, age]);
+  }, [pageInfo, setPageInfo, age, setPercent, customers]);
 
   let pages: number[] = [];
 
@@ -112,6 +117,11 @@ const CustomersByAge: React.FC<CustomerByAgeProps> = (props) => {
               {pageInfo?.total}
             </p>
           </div>
+          <div className='card is-bar'>
+            <div className='customer-page-cards__bar'>
+              <CircularBar percentage={percent} color='102, 201, 102' />
+            </div>
+          </div>
         </div>
 
         <div className='sort'>
@@ -162,7 +172,7 @@ const CustomersByAge: React.FC<CustomerByAgeProps> = (props) => {
         </div> */}
         {pageInfo?.data && (
           <div>
-            <CustomerTable data={pageInfo.data} head={['Name', 'Age', 'Registered', 'Email']} body={['username', 'age', 'dateRegistered', 'email']} />
+            <CustomerTable data={pageInfo.data} head={['User', 'Age', 'gender', 'Nat', 'Email', 'Registered']} body={['username', 'age', 'gender', 'nat', 'email', 'dateRegistered']} />
 
             <div className='pagination'>
               {pageInfo.pre_page && (
@@ -191,4 +201,10 @@ const CustomersByAge: React.FC<CustomerByAgeProps> = (props) => {
   );
 };
 
-export default CustomersByAge;
+const mapStateToProps = (store: StoreTypes) => {
+  return {
+    customers: store.customers.customers
+  };
+};
+
+export default connect(mapStateToProps)(CustomersByAge);

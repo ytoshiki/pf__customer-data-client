@@ -81,9 +81,20 @@ const ProductById: React.FC<ProductByIdProps> = () => {
               </div>
               <div>
                 <h3>{product.name}</h3>
-                <p className='category'>{product.category !== null && product.category.name}</p>
-                <p className='price'>${product.price}</p>
-                <p className='date'>Added on {dateFormatter(product.createdAt)}</p>
+                <div className='product-detail__block'>
+                  <p>
+                    <span>id</span>: {product.category !== null && product.category._id}
+                  </p>
+                  <p className='category'>
+                    <span>category</span>: {product.category !== null && product.category.name}
+                  </p>
+                  <p className='price'>
+                    <span>price</span>: ${product.price}
+                  </p>
+                  <p className='date'>
+                    <span>added</span>: {dateFormatter(product.createdAt)}
+                  </p>
+                </div>
                 <div className='options'>
                   <button>EDIT</button>
                   <button>PREVIEW</button>

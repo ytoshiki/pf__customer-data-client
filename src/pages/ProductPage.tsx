@@ -45,6 +45,16 @@ interface Purchase {
 const ProductPage: React.FC<ProductPageProps> = ({ products, fetchProducts, newlyAdded, fetchCategories, categories, fetchReviews, reviews, overallRating }) => {
   const [rankingData, setRankingData] = useState<{ name: string; id: string; sold: number }[]>([]);
 
+  const compare = (a: { sold: number }, b: { sold: number }) => {
+    if (a.sold < b.sold) {
+      return 1;
+    }
+    if (a.sold > b.sold) {
+      return -1;
+    }
+    return 0;
+  };
+
   useEffect(() => {
     if (products.length < 1) {
       fetchProducts();
@@ -107,7 +117,9 @@ const ProductPage: React.FC<ProductPageProps> = ({ products, fetchProducts, newl
           }
         });
 
-      setRankingData(returndata);
+      returndata.sort(compare);
+
+      setRankingData(returndata.slice(0, 10));
     });
   }, [rankingData, setRankingData]);
 

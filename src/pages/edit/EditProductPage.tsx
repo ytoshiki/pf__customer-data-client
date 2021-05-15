@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import FilterProduct from '../../components/filter/FilterProduct';
 import SearchProduct from '../../components/search/SearchProduct';
@@ -13,6 +13,8 @@ export interface EditProductPageProps {
 }
 
 const EditProductPage: React.FC<EditProductPageProps> = ({ products, fetchProducts }) => {
+  const [text, setText] = useState('');
+
   useEffect(() => {
     if (products.length > 0) {
       return;
@@ -21,10 +23,11 @@ const EditProductPage: React.FC<EditProductPageProps> = ({ products, fetchProduc
     fetchProducts();
   }, [products, fetchProducts]);
 
+  const customProducts = products.filter((product) => product.name.includes(text.trim()));
   return (
     <>
-      <FilterProduct />
-      <div className='edit-product'>{products.length > 0 && <ProductTable data={products} head={['product', '', 'price($)', 'category', 'added']} body={['images', 'name', 'price', 'category_row', 'createdAt', 'update', 'delete']} link={false} />}</div>
+      <FilterProduct text={text} setText={setText} />
+      <div className='edit-product'>{customProducts.length > 0 && <ProductTable data={customProducts} head={['product', '', 'price($)', 'category', 'added']} body={['images', 'name', 'price', 'category_row', 'createdAt', 'update', 'delete']} link={false} />}</div>
     </>
   );
 };

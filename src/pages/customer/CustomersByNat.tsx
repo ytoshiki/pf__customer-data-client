@@ -6,10 +6,15 @@ import CustomerTable from '../../components/table/CustomerTable';
 import SearchCustomer from '../../components/search/SearchCustomer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSort, faUser } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import { StoreTypes } from '../../redux';
+import CircularBar from '../../components/graph/Circular';
 
-export interface CustomerByNatProps {}
+export interface CustomerByNatProps {
+  customers: any[];
+}
 
-const CustomersByNat: React.FC<CustomerByNatProps> = () => {
+const CustomersByNat: React.FC<CustomerByNatProps> = ({ customers }) => {
   const params = useParams();
   const nat: string = (params as any).nat;
 
@@ -17,6 +22,7 @@ const CustomersByNat: React.FC<CustomerByNatProps> = () => {
   const [by, setBy] = useState('desc');
 
   const [pageInfo, setPageInfo] = useState<PageData>();
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     if (pageInfo) {
@@ -33,12 +39,13 @@ const CustomersByNat: React.FC<CustomerByNatProps> = () => {
       }
 
       setPageInfo(data);
+      setPercent(Math.round(((data.total as number) / customers.length) * 100));
     };
 
     if (!pageInfo) {
       fetchCustomers();
     }
-  }, [pageInfo, setPageInfo, nat]);
+  }, [pageInfo, setPageInfo, nat, customers, setPercent]);
 
   let pages: number[] = [];
 
@@ -101,6 +108,11 @@ const CustomersByNat: React.FC<CustomerByNatProps> = () => {
               {pageInfo?.total}
             </p>
           </div>
+          <div className='card is-bar'>
+            <div className='customer-page-cards__bar'>
+              <CircularBar percentage={percent} color='102, 201, 102' />
+            </div>
+          </div>
         </div>
         <div className='sort'>
           <div className='sort-block'>
@@ -131,7 +143,7 @@ const CustomersByNat: React.FC<CustomerByNatProps> = () => {
         </div>
         {pageInfo?.data && (
           <div>
-            <CustomerTable data={pageInfo.data} head={['Name', 'Age', 'Registered', 'Email']} body={['username', 'age', 'dateRegistered', 'email']} />
+            <CustomerTable data={pageInfo.data} head={['User', 'Age', 'gender', 'Nat', 'Email', 'Registered']} body={['username', 'age', 'gender', 'nat', 'email', 'dateRegistered']} />
             <div className='pagination'>
               {pageInfo.pre_page && (
                 <button onClick={() => changePage(pageInfo.page - 1)} className='prev-button'>
@@ -159,4 +171,10 @@ const CustomersByNat: React.FC<CustomerByNatProps> = () => {
   );
 };
 
-export default CustomersByNat;
+const mapStateToProps = (store: StoreTypes) => {
+  return {
+    customers: store.customers.customers
+  };
+};
+
+export default connect(mapStateToProps)(CustomersByNat);

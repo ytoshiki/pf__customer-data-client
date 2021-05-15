@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import FilterCategory from '../../components/filter/FilterCategory';
 import CategoryTable from '../../components/table/CategoryTable';
-import ProductTable from '../../components/table/ProductTable';
 import { fetchAllCategories, StoreTypes } from '../../redux';
 import { Category } from '../../redux/reducers/category/categoryReducer';
 
@@ -12,6 +11,8 @@ export interface EditCategoryProps {
 }
 
 const EditCategory: React.FC<EditCategoryProps> = ({ categories, fetchCategories }) => {
+  const [text, setText] = useState('');
+
   useEffect(() => {
     if (categories.length > 0) {
       return;
@@ -20,10 +21,11 @@ const EditCategory: React.FC<EditCategoryProps> = ({ categories, fetchCategories
     fetchCategories();
   }, [categories, fetchCategories]);
 
+  const customCategories = categories.filter((category) => category.name.includes(text.trim()));
   return (
     <>
-      <FilterCategory />
-      <div className='edit-product'>{categories.length > 0 && <CategoryTable data={categories} head={['name', 'image', 'heading', 'paragraph']} body={['name', 'image', 'heading', 'paragraph', 'update', 'delete']} />}</div>
+      <FilterCategory text={text} setText={setText} />
+      <div className='edit-product'>{customCategories.length > 0 && <CategoryTable data={customCategories} head={['name', 'image', 'heading', 'paragraph']} body={['name', 'image', 'heading', 'paragraph', 'update', 'delete']} />}</div>
     </>
   );
 };

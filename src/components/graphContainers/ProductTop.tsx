@@ -59,14 +59,17 @@ const ProductTop: React.FC<ProductTopProps> = ({ ratingPercentage }) => {
         <div className='product-top__avarage-rating-facts'>
           <div className='card'>
             <span className='label'>Above 4.5</span>
+
             <CircularBar percentage={ratingPercentage.top} color='102, 201, 102' />
           </div>
           <div className='card'>
             <span className='label'>3.0 - 4.4</span>
+
             <CircularBar percentage={ratingPercentage.middle} color='74, 71, 163' />
           </div>
           <div className='card'>
             <span className='label'>Below 3.0</span>
+
             <CircularBar percentage={ratingPercentage.bottom} color='207, 39, 39' />
           </div>
         </div>
