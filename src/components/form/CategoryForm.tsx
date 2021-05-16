@@ -30,7 +30,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ addCategory }) => {
       return;
     }
 
-    setSuccessMessage(`Category Created Successfully: ${(success as any).name}`);
+    setSuccessMessage(`Category Created Successfully`);
   };
 
   const onSubmit = (e: any) => {
@@ -73,11 +73,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ addCategory }) => {
 
   return (
     <div className='addForm'>
-      {successMessage && (
-        <p>
-          {successMessage} <Link to='/category/edit'>Edit Category</Link>
-        </p>
-      )}
+      {successMessage && <p className='addForm__result is-success'>{successMessage}</p>}
       {errors.request && errors.request}
       <h1>Add a New Category</h1>
       <form onSubmit={onSubmit} className='addForm__form'>

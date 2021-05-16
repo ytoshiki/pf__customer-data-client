@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom';
 import { dateFormatter, generateKey } from '../../helpers';
 import { Img } from 'react-image';
 import './CategoryTable.scss';
@@ -21,6 +20,12 @@ export interface CategoryTableProps {
 const CategoryTable: React.FC<CategoryTableProps> = ({ data, head, body, deleteCategory }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState('');
+  const [result, setResult] = useState('');
+
+  const resultMsg = {
+    success: 'Category successfully deleted',
+    fail: 'You are not authorized to delete category. Switch the admin account.'
+  };
 
   const [updateData, setUpdateData] = useState<CategoryFormData>({
     name: '',
@@ -29,13 +34,17 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ data, head, body, deleteC
     paragraph: ''
   });
 
-  const deleteTheCategory = (id: string) => {
+  const deleteTheCategory = async (id: string) => {
+    setResult('');
     const result = window.confirm('Want to delete?');
     if (!result) return;
 
-    const success = deleteCategory(id);
-    if (!success) console.log('DELETE FAILED');
-    console.log('DELETE SUCCEEDED');
+    const response = await deleteCategory(id);
+    if (!response.success) {
+      return setResult(resultMsg.fail);
+    }
+
+    return setResult(resultMsg.success);
   };
 
   const updateCategory = (obj: Category) => {
@@ -53,6 +62,9 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ data, head, body, deleteC
   return (
     <>
       <CategoryUpdateModal isOpen={isOpen} setIsOpen={setIsOpen} data={updateData} update={setUpdateData} id={id} />
+      <div className='category-table__result'>
+        <p className={result === resultMsg.success ? 'is-success' : 'is-fail'}>{result}</p>
+      </div>
       <table className='category-table'>
         <thead>
           <tr>

@@ -1,18 +1,19 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import './Navigation.scss';
-import { faUser, faImage, faEyeSlash, faEdit, faPlus, faChevronDown, faChevronUp, faQuestionCircle, faCompressAlt, faExpandAlt, faArrowsAltH } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faImage, faEdit, faPlus, faChevronDown, faChevronUp, faQuestionCircle, faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { StoreTypes } from '../redux';
+import { StoreTypes, logOutAdmin } from '../redux';
 import { Admin } from '../redux/reducers/admin/adminReducer';
 import { Rnd } from 'react-rnd';
 
 export interface NavigationProps {
   admin: Admin;
+  logoutAdmin: () => void;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ admin }) => {
+const Navigation: React.FC<NavigationProps> = ({ admin, logoutAdmin }) => {
   const navRef = useRef<HTMLElement>(null);
 
   const [navClass, setNavClass] = useState({
@@ -38,7 +39,13 @@ const Navigation: React.FC<NavigationProps> = ({ admin }) => {
     });
   };
 
-  // onClick={() => setResize(!resize)}
+  const onClickLogout = () => {
+    const result = window.confirm('Do you want to log out?');
+
+    if (!result) return;
+
+    logoutAdmin();
+  };
 
   return (
     <div
@@ -76,6 +83,10 @@ const Navigation: React.FC<NavigationProps> = ({ admin }) => {
                 {' '}
                 Logged In With <span>{admin.name}</span> <FontAwesomeIcon icon={faQuestionCircle} className='sub-icon' />
               </p>
+              <br />
+              <button className='navigation__admin-logout' onClick={onClickLogout}>
+                Log Out
+              </button>
             </div>
           </div>
           <ul className='navigation__list'>
@@ -182,4 +193,10 @@ const mapStateToProps = (store: StoreTypes) => {
     admin: store.admin
   };
 };
-export default connect(mapStateToProps)(Navigation);
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    logoutAdmin: () => dispatch(logOutAdmin())
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

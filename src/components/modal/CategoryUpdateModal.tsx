@@ -51,14 +51,19 @@ const CategoryUpdateModal: React.FC<CategoryUpdateModalProps> = ({ isOpen, setIs
         <div className='modal-component'>
           {error && error}
           <form
-            onSubmit={(e: any) => {
+            onSubmit={async (e: any) => {
               e.preventDefault();
 
               if (!data.heading || !data.image || !data.name) {
-                setError('You need heading, image, and name');
+                setError('Heading, image, and name are required');
                 return;
               }
-              updateNewCategory(id as string, data);
+              const res = await updateNewCategory(id as string, data);
+              if (!res) {
+                alert('You are not authorised to delete the category. Change the admin account');
+              } else {
+                alert('Category updated Successfully');
+              }
               setIsOpen(false);
             }}
           >

@@ -121,7 +121,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
 
   return (
     <div className='addForm'>
-      {successMessage && successMessage}
+      {successMessage && <p className='addForm__result is-success'>{successMessage}</p>}
       <span className='addForm__error'>{error.request && error.request}</span>
       <ProductModal isOpen={openModal} setIsOpen={setOpenModal} data={form} comfirm={addProduct} />
       <h1>Add a New Product</h1>

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ProductFormData } from '../../components/form/ProductForm';
+import { store } from '../store/store';
 import { ProductActionName } from '../types/product/actionName';
 
 interface ProductData {
@@ -70,7 +71,12 @@ export const addProduct = (form: ProductFormData) => {
       category: form.category
     };
     try {
-      const response_01 = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/products`, requestData);
+      const adminToken = store.getState().admin.token;
+      const response_01 = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/products`, requestData, {
+        headers: {
+          authorization: `Bearer ${adminToken}`
+        }
+      });
 
       const data_01 = response_01.data;
 
@@ -116,7 +122,12 @@ export const updateProduct = (id: string, form: ProductFormData) => {
       category: form.category
     };
     try {
-      const response_01 = await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/products/${id}`, requestData);
+      const adminToken = store.getState().admin.token;
+      const response_01 = await axios.put(`${process.env.REACT_APP_API_ENDPOINT}/products/${id}`, requestData, {
+        headers: {
+          authorization: `Bearer ${adminToken}`
+        }
+      });
 
       const data_01 = response_01.data;
 
@@ -156,7 +167,12 @@ export const deleteProduct = (id: string) => {
     });
 
     try {
-      const response_01 = await axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/products/${id}`);
+      const adminToken = store.getState().admin.token;
+      const response_01 = await axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/products/${id}`, {
+        headers: {
+          authorization: `Bearer ${adminToken}`
+        }
+      });
 
       const data_01 = response_01.data;
 

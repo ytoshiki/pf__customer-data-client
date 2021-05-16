@@ -8,6 +8,18 @@
   white-space: nowrap;
   background: var(--color-white-deep);
 
+  &__result {
+    padding: 0.8rem 0;
+    font-size: 1rem;
+    .is-success {
+      color: var(--color-success);
+    }
+
+    .is-fail {
+      color: var(--color-error);
+    }
+  }
+
   .image-wrapper {
     max-width: 4rem;
     height: 100%;

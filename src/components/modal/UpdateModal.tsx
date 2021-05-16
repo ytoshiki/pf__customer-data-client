@@ -9,7 +9,7 @@ import './Modal.scss';
 export interface UpdateModalProps {
   isOpen: boolean;
   setIsOpen: (bool: boolean) => void;
-  data?: ProductFormData;
+  data: ProductFormData;
   update?: any;
   id?: string;
   categories: {
@@ -23,6 +23,8 @@ export interface UpdateModalProps {
 Modal.setAppElement('#root');
 
 const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, update, categories, fetchCategories, updateNewProduct, id }) => {
+  const [error, setError] = useState('');
+
   useEffect(() => {
     if (categories.length > 0) {
       return;
@@ -61,7 +63,34 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, upda
         }}
       >
         <div className='modal-component'>
-          <form>
+          {error && error}
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+
+              if (!data.name || !data.price || !data.category) {
+                return setError('Name, price, and category are required');
+              }
+
+              if (!data.images.img1 && !data.images.img2) {
+                return setError('At least one image is required');
+              }
+
+              categories.forEach((category) => {
+                if (category.name === data?.category) {
+                  data.category = category.id;
+                }
+              });
+
+              const res = await updateNewProduct(id, data);
+              if (!res) {
+                alert('You are not authorised to delete the product. Change the admin account');
+              } else {
+                alert('Product updated Successfully');
+              }
+              setIsOpen(false);
+            }}
+          >
             <div>
               <label>Name</label>
               <input type='text' value={data?.name} onChange={(e) => update({ ...data, name: e.target.value })} />
@@ -129,20 +158,7 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, upda
                 </select>
               )}
             </div>
-            <button
-              onClick={() => {
-                categories.forEach((category) => {
-                  if (category.name === data?.category) {
-                    data.category = category.id;
-                  }
-                });
-
-                updateNewProduct(id, data);
-                setIsOpen(false);
-              }}
-            >
-              Submit
-            </button>
+            <button>Submit</button>
           </form>
         </div>
         <button onClick={() => setIsOpen(false)}>Close</button>

@@ -23,7 +23,10 @@ const EditProductPage: React.FC<EditProductPageProps> = ({ products, fetchProduc
     fetchProducts();
   }, [products, fetchProducts]);
 
-  const customProducts = products.filter((product) => product.name.includes(text.trim()));
+  let customProducts: Product[] = [];
+  if (products.length) {
+    customProducts = products.filter((product) => product.name.includes(text.trim()));
+  }
   return (
     <>
       <FilterProduct text={text} setText={setText} />

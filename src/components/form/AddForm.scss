@@ -3,6 +3,12 @@
     margin-top: 3rem;
   }
 
+  &__result {
+    &.is-success {
+      color: var(--color-success);
+    }
+  }
+
   &__block {
     margin-bottom: 2rem;
 

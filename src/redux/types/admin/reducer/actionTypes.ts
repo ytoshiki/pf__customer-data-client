@@ -8,4 +8,8 @@ interface FETCH_ADMIN {
   };
 }
 
-export type ActionTypes = FETCH_ADMIN;
+interface LOGOUT_ADMIN {
+  type: AdminActionName.LOGOUT_ADMIN;
+}
+
+export type ActionTypes = FETCH_ADMIN | LOGOUT_ADMIN;

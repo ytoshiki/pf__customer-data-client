@@ -24,6 +24,12 @@ const ProductTable: React.SFC<ProductTableProps> = ({ data, head, body, hover, l
 
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState('');
+  const [result, setResult] = useState('');
+
+  const resultMsg = {
+    success: 'Product successfully deleted',
+    fail: 'You are not authorized to delete product. Switch the admin account.'
+  };
 
   const [updateData, setUpdateData] = useState<ProductFormData>({
     name: '',
@@ -40,15 +46,15 @@ const ProductTable: React.SFC<ProductTableProps> = ({ data, head, body, hover, l
     history.push(`/products/${id}`);
   };
 
-  const deleteProduct = (id: string) => {
+  const deleteProduct = async (id: string) => {
     const result = window.confirm('Want to delete?');
     if (!result) return;
 
     // Check authority
 
-    const success = deleteAProduct(id);
-    if (!success) console.log('DELETE FAILED');
-    console.log('DELETE SUCCEEDED');
+    const response = await deleteAProduct(id);
+    if (!response) return setResult(resultMsg.fail);
+    return setResult(resultMsg.success);
   };
 
   const updateProduct = (obj: Product) => {
@@ -69,6 +75,9 @@ const ProductTable: React.SFC<ProductTableProps> = ({ data, head, body, hover, l
   return (
     <>
       <UpdateModal isOpen={isOpen} setIsOpen={setIsOpen} data={updateData} update={setUpdateData} id={id} />
+      <div className='productTable__result'>
+        <p className={result === resultMsg.success ? 'is-success' : 'is-fail'}>{result}</p>
+      </div>
       <table className='productTable'>
         <thead>
           <tr>

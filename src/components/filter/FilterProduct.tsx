@@ -15,7 +15,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({ text, setText }) => {
         <form>
           <div className='filter-edit__search'>
             <FontAwesomeIcon icon={faFilter} className='filter-edit__icon' />
-            <input type='text' placeholder='filter by name or id' value={text} onChange={(e) => setText(e.target.value)} />
+            <input type='text' placeholder='filter products' value={text} onChange={(e) => setText(e.target.value)} />
           </div>
         </form>
         <button>

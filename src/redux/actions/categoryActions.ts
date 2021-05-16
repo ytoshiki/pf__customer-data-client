@@ -1,6 +1,7 @@
 import { CategoryActionName } from '../types/category/actionName';
 import axios from 'axios';
 import { CategoryFormProps } from '../../components/form/CategoryForm';
+import { store } from '../store/store';
 
 interface CategoryData {
   name: string;
@@ -53,7 +54,13 @@ export const addCategory = (form: any) => {
     });
 
     try {
-      const response_01 = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/categories`, form);
+      const adminToken = store.getState().admin.token;
+
+      const response_01 = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/categories`, form, {
+        headers: {
+          authorization: `Bearer ${adminToken}`
+        }
+      });
       const data_01 = await response_01.data;
 
       if (!data_01.success) {
@@ -91,9 +98,18 @@ export const deleteCategoryById = (id: string) => {
         type: CategoryActionName.START_CATEGORIES_ACTION
       });
 
-      const request = await axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/categories/${id}`);
+      const adminToken = store.getState().admin.token;
+      const request = await axios.delete(`${process.env.REACT_APP_API_ENDPOINT}/categories/${id}`, {
+        headers: {
+          authorization: `Bearer ${adminToken}`
+        }
+      });
 
       const response = request.data;
+
+      if (response.auth) {
+        throw new Error('Not Authorized');
+      }
 
       if (!response.success) {
         throw new Error(response.message || 'Request Error');
@@ -104,10 +120,14 @@ export const deleteCategoryById = (id: string) => {
         payload: response.category
       });
 
-      return true;
+      return {
+        success: true
+      };
     } catch (error) {
-      console.log(error.message);
-      return false;
+      return {
+        success: false,
+        error: error.message
+      };
     }
   };
 };
@@ -119,7 +139,12 @@ export const updateCategoryById = (id: string, form: any) => {
         type: CategoryActionName.START_CATEGORIES_ACTION
       });
 
-      const request = await axios.patch(`${process.env.REACT_APP_API_ENDPOINT}/categories/${id}`, form);
+      const adminToken = store.getState().admin.token;
+      const request = await axios.patch(`${process.env.REACT_APP_API_ENDPOINT}/categories/${id}`, form, {
+        headers: {
+          authorization: `Bearer ${adminToken}`
+        }
+      });
 
       const response = request.data;
 
@@ -132,11 +157,8 @@ export const updateCategoryById = (id: string, form: any) => {
         payload: response.category
       });
 
-      console.log('Category updated', response.category);
-
       return true;
     } catch (error) {
-      console.log(error.message);
       return false;
     }
   };

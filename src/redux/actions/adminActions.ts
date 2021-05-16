@@ -8,3 +8,13 @@ export const fetchAdmin = (auth: { name: string; token: string }) => {
     });
   };
 };
+
+export const logOutAdmin = () => {
+  return (dispatch: any) => {
+    sessionStorage.removeItem('admin-name');
+    sessionStorage.removeItem('admin-token');
+    dispatch({
+      type: AdminActionName.LOGOUT_ADMIN
+    });
+  };
+};

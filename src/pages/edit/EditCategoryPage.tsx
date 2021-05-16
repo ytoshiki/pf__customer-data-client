@@ -21,7 +21,10 @@ const EditCategory: React.FC<EditCategoryProps> = ({ categories, fetchCategories
     fetchCategories();
   }, [categories, fetchCategories]);
 
-  const customCategories = categories.filter((category) => category.name.includes(text.trim()));
+  let customCategories: Category[] = [];
+  if (categories.length) {
+    customCategories = categories.filter((category) => category.name.includes(text.trim()));
+  }
   return (
     <>
       <FilterCategory text={text} setText={setText} />
