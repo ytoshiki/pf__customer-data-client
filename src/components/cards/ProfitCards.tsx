@@ -21,11 +21,11 @@ const ProfitCards: React.FC<ProfitCardProps> = ({ purchases, lastWeekProfit, thi
   const [weekKeyword, setWeekKeyword] = useState('');
   const [monthKeyword, setMonthKeyword] = useState('');
 
-  useEffect(() => {
-    if (!purchases) {
-      return;
-    }
-  }, [purchases]);
+  // useEffect(() => {
+  //   if (!purchases) {
+  //     return;
+  //   }
+  // }, [purchases]);
 
   useEffect(() => {
     if (weekIncrease) {

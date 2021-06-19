@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { checkImage } from '../../helpers/imageValidate';
 import { ProductData } from '../../pages/customer/CustomerById';
 import { addProduct, fetchAllCategories, StoreTypes } from '../../redux';
 import { Category } from '../../redux/reducers/category/categoryReducer';
@@ -46,12 +47,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
   });
 
   useEffect(() => {
-    if (categories.length) {
-      return;
+    let mounted = true;
+
+    if (mounted) {
+      fetchCategories();
     }
 
-    fetchCategories();
-  }, [categories, fetchCategories]);
+    return () => {
+      mounted = false;
+    };
+  }, [fetchCategories]);
 
   const addProduct = async () => {
     try {
@@ -66,7 +71,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
     } catch (error) {}
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
 
     setError({
@@ -114,6 +119,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
     if (!result) {
       setError(tempoErrors);
       return;
+    }
+    const validImage = await checkImage([form.images.img1, form.images.img2]);
+
+    if (!validImage) {
+      return setError({
+        ...tempoErrors,
+        image: 'Either image is invalid'
+      });
     }
 
     setOpenModal(true);

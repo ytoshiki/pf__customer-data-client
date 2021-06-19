@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { checkImage } from '../../helpers/imageValidate';
 import { addCategory } from '../../redux';
 import './AddForm.scss';
 
@@ -33,7 +33,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ addCategory }) => {
     setSuccessMessage(`Category Created Successfully`);
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
 
     setErrors({ name: '', image: '', heading: '', paragraph: '', request: '' });
@@ -66,6 +66,15 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ addCategory }) => {
     if (error) {
       setErrors(tempo_errors);
       return;
+    }
+
+    const result = await checkImage([form.image]);
+
+    if (!result) {
+      return setErrors({
+        ...tempo_errors,
+        image: 'Image is invalid'
+      });
     }
 
     submitForm();

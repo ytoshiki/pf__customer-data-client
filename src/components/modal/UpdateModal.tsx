@@ -1,7 +1,10 @@
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
-import { Img } from 'react-image';
+
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
+import { checkImage } from '../../helpers/imageValidate';
 import { fetchAllCategories, StoreTypes, updateProduct } from '../../redux';
 import { ProductFormData } from '../form/ProductForm';
 import './Modal.scss';
@@ -24,49 +27,22 @@ Modal.setAppElement('#root');
 
 const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, update, categories, fetchCategories, updateNewProduct, id }) => {
   const [error, setError] = useState('');
+  const [imageError, setImageError] = useState('');
 
   useEffect(() => {
-    if (categories.length > 0) {
-      return;
-    }
-
     fetchCategories();
-  }, [categories, fetchCategories]);
+  }, [fetchCategories]);
 
   return (
     <div>
-      <Modal
-        isOpen={isOpen}
-        style={{
-          overlay: {
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(255, 255, 255, 0.75)'
-          },
-          content: {
-            position: 'absolute',
-            top: '40px',
-            left: '400px',
-            right: '40px',
-            bottom: '40px',
-            border: '1px solid #ccc',
-            background: '#fff',
-            overflow: 'auto',
-            WebkitOverflowScrolling: 'touch',
-            borderRadius: '4px',
-            outline: 'none',
-            padding: '20px'
-          }
-        }}
-      >
-        <div className='modal-component'>
-          {error && error}
+      <Modal isOpen={isOpen} contentLabel='Example Modal' className='c-modal' overlayClassName='c-modal__overlay'>
+        <div className='c-modal__inner'>
+          {error && <span className='c-modal__error'>{error}</span>}
           <form
             onSubmit={async (e) => {
               e.preventDefault();
+
+              setImageError('');
 
               if (!data.name || !data.price || !data.category) {
                 return setError('Name, price, and category are required');
@@ -82,6 +58,11 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, upda
                 }
               });
 
+              const result = await checkImage([data.images.img1, data.images.img2]);
+
+              if (!result) {
+                return setImageError('Either image is invalid');
+              }
               const res = await updateNewProduct(id, data);
               if (!res) {
                 alert('You are not authorised to delete the product. Change the admin account');
@@ -90,17 +71,23 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, upda
               }
               setIsOpen(false);
             }}
+            className='c-modal__form'
           >
-            <div>
+            <div className='c-modal__block'>
               <label>Name</label>
               <input type='text' value={data?.name} onChange={(e) => update({ ...data, name: e.target.value })} />
             </div>
-            <div>
-              <label>Price</label>
+            <div className='c-modal__block'>
+              <label>
+                Price <small> * put number only. $ is included already.</small>
+              </label>
               <input type='text' value={data?.price} onChange={(e) => update({ ...data, price: e.target.value })} />
             </div>
-            <div>
-              <label>Images</label>
+            <div className='c-modal__block'>
+              <label>
+                Images <small> * put image urls</small>
+                {imageError && <span className='c-modal__error'>{imageError}</span>}
+              </label>
               <input
                 value={data?.images.img1}
                 onChange={(e) =>
@@ -113,9 +100,9 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, upda
                   })
                 }
               />
-              ;
+
               <input
-                value={data?.images.img2}
+                value={data?.images.img2 || ''}
                 onChange={(e) =>
                   update({
                     ...data,
@@ -125,10 +112,10 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, upda
                     }
                   })
                 }
+                className='second'
               />
-              ;
             </div>
-            <div>
+            <div className='c-modal__block'>
               <label htmlFor=''>Category</label>
               {categories.length && (
                 <select
@@ -158,10 +145,12 @@ const UpdateModal: React.FC<UpdateModalProps> = ({ isOpen, setIsOpen, data, upda
                 </select>
               )}
             </div>
-            <button>Submit</button>
+            <button className='c-modal__submit'>Submit</button>
           </form>
         </div>
-        <button onClick={() => setIsOpen(false)}>Close</button>
+        <button onClick={() => setIsOpen(false)} className='c-modal__close'>
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
       </Modal>
     </div>
   );

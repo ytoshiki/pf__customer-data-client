@@ -16,6 +16,8 @@ const ReviewList: React.FC<ReviewListProps> = ({ p_id }) => {
       return;
     }
 
+    let mounted = true;
+
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/reviews/product/${p_id}`);
@@ -27,11 +29,15 @@ const ReviewList: React.FC<ReviewListProps> = ({ p_id }) => {
           return;
         }
 
-        setData(data.reviews);
+        if (mounted) setData(data.reviews);
       } catch (error) {}
     };
 
     fetchReviews();
+
+    return () => {
+      mounted = false;
+    };
   }, [p_id, data, setData]);
 
   return (

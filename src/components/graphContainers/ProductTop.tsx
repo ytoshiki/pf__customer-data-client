@@ -22,13 +22,10 @@ interface RatingData {
 }
 
 const ProductTop: React.FC<ProductTopProps> = ({ ratingPercentage }) => {
-  const [init, setInit] = useState(true);
   const [ratingData, setRatingData] = useState<RatingData[]>([]);
 
   useEffect(() => {
-    if (!init) {
-      return;
-    }
+    let mounted = true;
 
     const fetchProductRating = async () => {
       try {
@@ -41,17 +38,22 @@ const ProductTop: React.FC<ProductTopProps> = ({ ratingPercentage }) => {
           return;
         }
 
-        setRatingData(data.data);
+        console.log('mounted');
+        if (mounted) {
+          setRatingData(data.data);
+          console.log('mounted');
+        }
       } catch (error) {}
     };
 
-    if (ratingData.length === 0) {
-      fetchProductRating();
-    }
+    fetchProductRating();
 
-    setInit(false);
-  }, [init, setInit, ratingData, setRatingData]);
+    return () => {
+      mounted = false;
+    };
+  }, [setRatingData]);
 
+  console.log(ratingData);
   return (
     <div className='product-top'>
       <div className='product-top__avarage-rating'>

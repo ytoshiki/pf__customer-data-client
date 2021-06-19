@@ -18,6 +18,8 @@ const ProfitTop: React.SFC<ProfitTopProps> = () => {
       return;
     }
 
+    let mounted = true;
+
     const fetchSalesData = async () => {
       const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/purchase/data`);
 
@@ -37,10 +39,14 @@ const ProfitTop: React.SFC<ProfitTopProps> = () => {
         return obj;
       });
 
-      setSalesData(data.data);
+      if (mounted) setSalesData(data.data);
     };
 
     fetchSalesData();
+
+    return () => {
+      mounted = false;
+    };
   }, [salesData, setSalesData]);
 
   return (

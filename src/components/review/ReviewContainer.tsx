@@ -2,7 +2,6 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import Rating from 'react-rating';
-import { setOriginalNode } from 'typescript';
 import { ReviewData } from '../../pages/review/AllReviews';
 import VerticalGraph from '../graph/VerticalGraph';
 import './ReviewContainer.scss';
@@ -23,6 +22,8 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ reviews, p_id }) => {
   const [data, setData] = useState<GraphData[]>([]);
 
   useEffect(() => {
+    let mounted = true;
+
     if (average) {
       return;
     }
@@ -31,7 +32,11 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ reviews, p_id }) => {
 
     const output = sum / reviews.length;
 
-    setAverage(output);
+    if (mounted) setAverage(output);
+
+    return () => {
+      mounted = false;
+    };
   }, [average, setAverage, reviews]);
 
   useEffect(() => {

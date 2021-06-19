@@ -20,7 +20,7 @@ const FilterCategory: React.FC<FilterCategoryProps> = ({ text, setText }) => {
           </div>
         </div>
         <button>
-          <Link to='/add/product'>Add New</Link>
+          <Link to='/add/category'>Add New</Link>
         </button>
       </div>
     </div>
