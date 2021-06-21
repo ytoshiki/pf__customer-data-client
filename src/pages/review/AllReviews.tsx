@@ -93,13 +93,15 @@ const AllReviews: React.SFC<AllReviewsProps> = () => {
         <div className='review-page-detail__title-wrapper'>
           <h1 className='review-page-detail__title'>All Reviews</h1>
         </div>
-        <div>
+        <div className='review-page-detail__top'>
           {average && (
-            <div className='rating'>
-              <h3>Average Rating</h3>
-              <p className='number'>{String(average).split('.').length > 1 ? average : average + '.0'}</p>
+            <>
+              <div className='rating'>
+                <h3>Average Rating: </h3>
+                <p className='number'>{String(average).split('.').length > 1 ? average : average + '.0'}</p>
+              </div>
               <Rating initialRating={average} emptySymbol={<FontAwesomeIcon icon={faStar} color='grey' />} fullSymbol={<FontAwesomeIcon icon={faStar} color='#FDCC0D' />} readonly />
-            </div>
+            </>
           )}
         </div>
         {reviews && <ReviewTable data={reviews} head={['rating', 'comment', 'reviewed on', 'reviewed by', 'date']} body={['rating', 'comment', 'product', 'customer', 'createdAt']} />}

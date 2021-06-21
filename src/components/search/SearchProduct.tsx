@@ -52,7 +52,7 @@ const SearchProduct: React.FC<SearchProductProps> = () => {
     const result_id = await fetchById();
 
     if (result_id) {
-      return history.push(`${result_id._id}`);
+      return history.push(`/products/${result_id._id}/`);
     }
 
     const result_name = await fetchByName();
@@ -62,7 +62,7 @@ const SearchProduct: React.FC<SearchProductProps> = () => {
       return;
     }
 
-    return history.push(`${result_name._id}`);
+    return history.push(`/products/${result_name._id}/`);
   };
 
   return (

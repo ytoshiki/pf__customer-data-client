@@ -32,7 +32,7 @@ const ReviewContainer: React.FC<ReviewContainerProps> = ({ reviews, p_id }) => {
 
     const output = sum / reviews.length;
 
-    if (mounted) setAverage(output);
+    if (mounted) setAverage(Math.floor(output * Math.pow(10, 1)) / Math.pow(10, 1));
 
     return () => {
       mounted = false;

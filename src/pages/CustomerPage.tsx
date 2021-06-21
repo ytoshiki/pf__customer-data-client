@@ -94,7 +94,7 @@ const CustomerPage: React.FC<CustomerPageProps> = ({ customers, genders, ages, n
 
           <Link to='/' className='is-non-link'>
             <div className='customer-card'>
-              Customer Increase In a year
+              Annual Increase
               <div className='customer-card__bar'>
                 <CircularBar percentage={percentage as number} color='102, 201, 102' />
               </div>

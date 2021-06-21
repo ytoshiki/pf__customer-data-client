@@ -6,6 +6,7 @@ import { Admin } from '../../redux/reducers/admin/adminReducer';
 import Login from './login/Login';
 import Signup from './signup/Signup';
 import './LoginPage.scss';
+import Logo from '../../images/logo.png';
 
 export interface LoginPageProps {
   admin?: Admin;
@@ -41,6 +42,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ admin, fetchAdmin }) => {
       ) : (
         <div className='loginPage'>
           <div className='loginPage__inner'>
+            <div className='loginPage__logo'>
+              <img src={Logo} alt='' />
+            </div>
             {login ? <Login /> : <Signup />}
             <small className='loginPage__toggle'>
               {login ? (

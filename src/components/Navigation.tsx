@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { StoreTypes, logOutAdmin } from '../redux';
 import { Admin } from '../redux/reducers/admin/adminReducer';
 import { Rnd } from 'react-rnd';
+import Logo from '../images/logo.png';
 
 export interface NavigationProps {
   admin: Admin;
@@ -73,7 +74,11 @@ const Navigation: React.FC<NavigationProps> = ({ admin, logoutAdmin }) => {
       >
         <nav className={`navigation ${resize ? 'hide' : ''}`} ref={navRef}>
           <div className='navigation__option'>
-            {' '}
+            <div className='navigation__image'>
+              <Link to='/'>
+                <img src={Logo} alt='' />
+              </Link>
+            </div>{' '}
             <FontAwesomeIcon icon={!resize ? faCompressAlt : faExpandAlt} />
           </div>
           <div className='navigation__admin'>
