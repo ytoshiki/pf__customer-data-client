@@ -105,7 +105,7 @@ const CustomersByNat: React.FC<CustomerByNatProps> = ({ customers }) => {
             <h2>Total</h2>
             <p>
               <FontAwesomeIcon icon={faUser} className='card-icon' />
-              {pageInfo?.total}
+              {pageInfo?.total}/{customers.length}
             </p>
           </div>
           <div className='card is-bar'>
@@ -133,9 +133,9 @@ const CustomersByNat: React.FC<CustomerByNatProps> = ({ customers }) => {
             </label>
             <select onChange={(e) => setBy(e.target.value)}>
               <option value='desc' defaultChecked>
-                Desc
+                Ascending
               </option>
-              <option value='insc'>Insc</option>
+              <option value='insc'>Descending</option>
             </select>
           </div>
 

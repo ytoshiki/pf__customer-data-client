@@ -98,9 +98,8 @@ const AllReviews: React.SFC<AllReviewsProps> = () => {
             <>
               <div className='rating'>
                 <h3>Average Rating: </h3>
-                <p className='number'>{String(average).split('.').length > 1 ? average : average + '.0'}</p>
+                <p className='number'>{String(average).split('.').length > 1 ? average : average + '.0'}/5.0</p>
               </div>
-              <Rating initialRating={average} emptySymbol={<FontAwesomeIcon icon={faStar} color='grey' />} fullSymbol={<FontAwesomeIcon icon={faStar} color='#FDCC0D' />} readonly />
             </>
           )}
         </div>

@@ -68,6 +68,15 @@ const ProductForm: React.FC<ProductFormProps> = ({ categories, fetchCategories, 
       }
 
       setSuccessMessage('Product Added Successfully');
+      setForm({
+        name: '',
+        price: '',
+        images: {
+          img1: '',
+          img2: ''
+        },
+        category: ''
+      });
     } catch (error) {}
   };
 

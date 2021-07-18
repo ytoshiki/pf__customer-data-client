@@ -2,7 +2,6 @@
   max-width: 110rem;
   margin: auto;
   padding: 2rem 1rem;
-  text-align: center;
 
   &__inner {
     max-width: 60rem;
@@ -41,12 +40,13 @@
     &-date {
       font-size: 1rem;
       opacity: 0.7;
+      margin-bottom: 2rem;
+      margin-top: 1rem;
     }
 
     &-comment {
       font-size: 1.3rem;
       line-height: 1.5;
-      max-width: 40rem;
     }
   }
 
@@ -57,7 +57,7 @@
     }
 
     &-img {
-      max-width: 5rem;
+      max-width: 20rem;
       img {
         width: 100%;
       }
@@ -65,6 +65,10 @@
 
     &-name {
       text-decoration: underline;
+      margin-top: 1rem;
+      a {
+        font-size: 1.4rem;
+      }
     }
   }
 

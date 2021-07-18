@@ -176,25 +176,11 @@
         margin-right: 3rem;
       }
 
-      // .category {
-      //   font-weight: bold;
-      //   font-size: 1.1rem;
-      // }
-
-      // .price {
-      //   margin-top: 0.75rem;
-      //   font-weight: bold;
-      // }
-
-      // .date {
-      //   font-size: 0.8rem;
-      //   margin-top: 3rem;
-      // }
-
       .options {
         margin-top: 1.5rem;
 
-        button {
+        a {
+          text-decoration: none;
           outline: none;
           border: none;
           background: var(--color-gb-dark);

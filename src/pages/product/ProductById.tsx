@@ -7,6 +7,7 @@ import Slideshow from '../../components/slider/Slide';
 import { dateFormatter } from '../../helpers';
 import ReviewContainer from '../../components/review/ReviewContainer';
 import { ReviewData } from '../review/AllReviews';
+import { Link } from 'react-router-dom';
 
 export interface ProductByIdProps {}
 
@@ -32,6 +33,7 @@ const ProductById: React.FC<ProductByIdProps> = () => {
   const [purchases, setPurchases] = useState<any[]>([]);
 
   useEffect(() => {
+    let mounted = true;
     if (product) {
       return;
     }
@@ -45,12 +47,16 @@ const ProductById: React.FC<ProductByIdProps> = () => {
         console.log(data.message || 'FETCH ERROR');
       }
 
-      setProduct(data.product);
+      if (mounted) setProduct(data.product);
     };
 
     if (!product) {
       fetchProduct();
     }
+
+    return () => {
+      mounted = false;
+    };
   }, [product, setProduct, id]);
 
   useEffect(() => {
@@ -64,7 +70,9 @@ const ProductById: React.FC<ProductByIdProps> = () => {
         if (!response.success) throw new Error(response.message);
 
         setPurchases(response.purchases);
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     fetchPurchases();
@@ -96,8 +104,10 @@ const ProductById: React.FC<ProductByIdProps> = () => {
                   </p>
                 </div>
                 <div className='options'>
-                  <button>EDIT</button>
-                  <button>PREVIEW</button>
+                  <Link to='/edit/product'>EDIT</Link>
+                  <a href='/' target='_blank'>
+                    PREVIEW
+                  </a>
                 </div>
               </div>
             </div>

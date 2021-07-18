@@ -23,19 +23,6 @@ export interface ProductModalProps {
 Modal.setAppElement('#root');
 
 const ProductModal: React.FC<ProductModalProps> = ({ isOpen, setIsOpen, data, comfirm }) => {
-  // const [category, setCategory] = useState('');
-
-  // useEffect(() => {
-  //   if (!data || category) {
-  //     return;
-  //   }
-
-  //   const getCategoryName = async () => {
-  //     try {
-  //     } catch (error) {}
-  //   };
-  // }, [data, category, setCategory]);
-
   return (
     <div>
       <Modal isOpen={isOpen} contentLabel='Example Modal' className='c-modal' overlayClassName='c-modal__overlay'>

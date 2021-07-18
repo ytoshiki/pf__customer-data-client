@@ -81,7 +81,7 @@ const Login: React.FC<LoginProps> = ({ fetchAdmin }) => {
     } catch (error) {
       setErrors({
         ...errors,
-        req: `Either name or password is correct`
+        req: `Either name or password is incorrect`
       });
     }
   };

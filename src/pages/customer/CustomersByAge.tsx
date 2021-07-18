@@ -143,9 +143,9 @@ const CustomersByAge: React.FC<CustomerByAgeProps> = ({ customers }) => {
             </label>
             <select onChange={(e) => setBy(e.target.value)}>
               <option value='desc' defaultChecked>
-                Desc
+                Ascending
               </option>
-              <option value='insc'>Insc</option>
+              <option value='insc'>Descending</option>
             </select>
           </div>
 
