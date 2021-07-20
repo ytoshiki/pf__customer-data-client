@@ -105,7 +105,7 @@ const ProductById: React.FC<ProductByIdProps> = () => {
                 </div>
                 <div className='options'>
                   <Link to='/edit/product'>EDIT</Link>
-                  <a href='/' target='_blank'>
+                  <a href={`${process.env.REACT_APP_CLIENT_URL}products/${product._id}`} target='_blank' rel='noreferrer'>
                     PREVIEW
                   </a>
                 </div>
