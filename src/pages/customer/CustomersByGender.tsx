@@ -109,7 +109,7 @@ const CustomersByGender: React.FC<CustomerByGenderProps> = ({ customers }) => {
             <h2>Total</h2>
             <p>
               <FontAwesomeIcon icon={faUser} className='card-icon' />
-              {pageInfo?.total}
+              {pageInfo?.total}/{customers.length}
             </p>
           </div>
           <div className='card is-bar'>

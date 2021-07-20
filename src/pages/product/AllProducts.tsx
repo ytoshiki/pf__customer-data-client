@@ -8,7 +8,7 @@ import './ProductPageDetail.scss';
 
 export interface AllProductsProps {}
 
-const AllProducts: React.SFC<AllProductsProps> = () => {
+const AllProducts: React.FC<AllProductsProps> = () => {
   const [products, setProducts] = useState<ProductData[]>([]);
 
   useEffect(() => {

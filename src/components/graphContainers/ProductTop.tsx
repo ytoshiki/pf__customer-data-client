@@ -38,10 +38,8 @@ const ProductTop: React.FC<ProductTopProps> = ({ ratingPercentage }) => {
           return;
         }
 
-        console.log('mounted');
         if (mounted) {
           setRatingData(data.data);
-          console.log('mounted');
         }
       } catch (error) {}
     };
@@ -53,7 +51,6 @@ const ProductTop: React.FC<ProductTopProps> = ({ ratingPercentage }) => {
     };
   }, [setRatingData]);
 
-  console.log(ratingData);
   return (
     <div className='product-top'>
       <div className='product-top__avarage-rating'>

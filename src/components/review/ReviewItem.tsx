@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { dateFormatter } from '../../helpers';
 import { ReviewData } from '../../pages/review/AllReviews';
 import './ReviewItem.scss';
+import Avator from '../../images/avator.png';
 
 export interface ReviewItemProps {
   review: ReviewData;
@@ -18,7 +19,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review }) => {
         <div className='description'>
           <Link to={`/customers/${(review.customer as any)._id}`} className='main'>
             <div className='image-wrapper'>
-              <img src={(review.customer as any).avator} alt='' />
+              <img src={(review.customer as any).avator || Avator} alt='' />
             </div>
 
             <div>
