@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import { fetchAdmin } from '../../../redux';
 import '../LoginPage.scss';
 
 export interface SignupProps {
   setSuccess?: any;
+
+  fetchAdmin: any;
 }
 
 export interface AuthInfo {
@@ -17,7 +21,7 @@ export interface AuthError {
   req: string;
 }
 
-const Signup: React.FC<SignupProps> = ({ setSuccess }) => {
+const Signup: React.FC<SignupProps> = ({ setSuccess, fetchAdmin }) => {
   const [errors, setErrors] = useState<AuthError>({
     name: '',
     password: '',
@@ -67,21 +71,28 @@ const Signup: React.FC<SignupProps> = ({ setSuccess }) => {
 
   const submitForm = async (e: any) => {
     e.preventDefault();
+
     const valid = checkValidation();
 
     if (!valid) return;
 
     try {
       const request = await axios.post(`${process.env.REACT_APP_API_ENDPOINT}/admin/register`, form);
-      const response = request.data;
+
+      const response = await request.data;
 
       if (!response.success) {
         throw new Error();
       }
 
       sessionStorage.setItem('admin', response.token);
-      setSuccess(true);
+
+      fetchAdmin({
+        name: response.admin.name,
+        token: response.token
+      });
     } catch (error) {
+      console.log(error);
       setErrors({
         ...errors,
         req: `${form.name} is already taken. Try another one`
@@ -112,4 +123,10 @@ const Signup: React.FC<SignupProps> = ({ setSuccess }) => {
   );
 };
 
-export default Signup;
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    fetchAdmin: (auth: { name: string; token: string }) => dispatch(fetchAdmin(auth))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Signup);

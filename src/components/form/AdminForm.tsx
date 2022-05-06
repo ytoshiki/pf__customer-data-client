@@ -16,6 +16,7 @@ const AdminForm: React.FC<AdminFormProps> = () => {
 
       const response = await request.data;
 
+      console.log(response);
       if (!response.success) {
         throw new Error(response.message || 'FETCH ERROR');
       }
